@@ -35,7 +35,7 @@ The task is to create a calculator with basic math operations **(+,-,*,/)**, **f
 * You ***must*** try debugging on the calculator - you will submit a screenshot of the debugger in the math library.
 * A mockup of the user interface of the next version of the calculator will be created (planned for the future), which will support scientific mode, graphing and some other potentially useful function (BMI calculation, stopwatch, statistical functions, ...). Must be clear how the new version will look and work, create more mockups if needed.
 
-## Profilng
+## Profiling
 
 Using functions from your math library, the task is to create a program (as a separate executable file) to calculate the [sample standard deviation](https://en.wikipedia.org/wiki/Standard_deviation) from a sequence of numbers that the program reads from standard input (in C, e.g. using the scanf function) to the end of the file and must be able to read ***at least 1000 numbers***. Only numbers separated by whitespace (space, line break or tab) will be on the input and their number is not predefined. Formula for the sampling standard deviation to be used:
 $$
