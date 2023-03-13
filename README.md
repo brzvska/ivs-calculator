@@ -29,7 +29,7 @@ The task is to create a calculator with basic math operations **(+,-,*,/)**, **f
 * *run* (starts the program)
 * *profile* (starts the translation of the program to calculate the standard deviation for profiling) - ***if you choose the scripting language, use it to download the dependencies***, or choose the option below   
     
-    
+
 * Unless absolutely necessary (e.g. installation paths such as /usr/bin), the Makefile will not contain absolute paths.
 * If possible, the Makefile will not contain the name of either source file.
 * You ***must*** try debugging on the calculator - you will submit a screenshot of the debugger in the math library.
@@ -72,3 +72,7 @@ README.md|txt
 .editorconfig
 ```
  
+## Authors:
+[Alina Vinogradova](https://github.com/jsemaljaa),
+[Maryia Mazurava](https://github.com/maryia-mazurava),
+[Anastasiia Berezovska](https://github.com/brzvska)
