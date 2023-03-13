@@ -1,0 +1,20 @@
+Členové týmu: Anastasiia Berezovska (xberez04), Alina Vinogradova (xvinog00), Maryia Mazurava (xmazur08).
+
+
+Stanovené termíny:
+//TODO
+
+
+Přidělení úkolů na projektu jednotlivým řešitelům:
+Anastasiia Berezovska - 
+Alina Vinogradova - 
+Maryia Mazurava -
+
+
+Zvolené komunikační kanály:
+Zvolili jsme Telegram a Discord jako komunikační prostředky, ve kterých máme privátní kanály. 
+
+
+Zvolený systém pro správu verzí a hosting:
+Zvolili jsme git pro správu verzí. Vytvořili jsme na GitHubu privátní repozitář, do kterého budeme přidávát/aktualizujt soubory (kód).
+//TODO informaci, jak do repozitáře mohou nahlédnout vyučující/cvičící
