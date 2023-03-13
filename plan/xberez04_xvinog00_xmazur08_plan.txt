@@ -1,22 +1,25 @@
-Členové týmu: Anastasiia Berezovska (xberez04), Alina Vinogradova (xvinog00), Maryia Mazurava (xmazur08).
+Team members: Anastasiia Berezovska (xberez04), Alina Vinogradova (xvinog00), Maryia Mazurava (xmazur08).
 
 
-Stanovené termíny:
-18.03.2023 - předběžný návrh projektu: první verze GUI, struktura, výběr jazyka programování pro vývoj 
+Set deadlines:
+18.03.2023 - provisional design of the project: first version of GUI (mockup), structure, choice of programming language for development. 
+29.03.2023 - basic mathematical operations, GUI implementation (template).
+08.04.2023 - advanced mathematical operations, improved GUI.
+15.04.2023 - tests.
+22.04.2023 - documentation, profiling.
 
 
-Přidělení úkolů na projektu jednotlivým řešitelům:
-Anastasiia Berezovska - 
-Alina Vinogradova - 
-Maryia Mazurava -
+Provisional assignment of project tasks to individual researchers:
+Anastasiia Berezovska - GUI, documentation, tests.
+Alina Vinogradova - profiling, advanced mathematical operations, installer.
+Maryia Mazurava - basic mathematical operations, GUI, tests.
 
 
-Zvolené komunikační kanály:
-Zvolili jsme Telegram a Discord jako komunikační prostředky, ve kterých máme privátní kanály. 
+Selected communication channels:
+We have chosen Telegram and Discord as means of communication in which we have our private channels. 
 
 
-Zvolený systém pro správu verzí a hosting:
+Selected version control system and hosting:
+We chose GIT for version control. We have created a private repository on GitHub where we will add/update files (code).
 https://github.com/brzvska/IVS-
-
-Zvolili jsme GIT pro správu verzí. Vytvořili jsme na GitHubu privátní repozitář, do kterého budeme přidávát/aktualizujt soubory (kód).
-//TODO informaci, jak do repozitáře mohou nahlédnout vyučující/cvičící
+We have sent an invitation to a tutor ("ivskontrola" on GitHub) to our private repository so she/he could follow the software development process.
