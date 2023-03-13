@@ -2,7 +2,7 @@
 
 
 Stanovené termíny:
-//TODO
+18.03.2023 - předběžný návrh projektu: první verze GUI, struktura, výběr jazyka programování pro vývoj 
 
 
 Přidělení úkolů na projektu jednotlivým řešitelům:
@@ -16,5 +16,7 @@ Zvolili jsme Telegram a Discord jako komunikační prostředky, ve kterých mám
 
 
 Zvolený systém pro správu verzí a hosting:
-Zvolili jsme git pro správu verzí. Vytvořili jsme na GitHubu privátní repozitář, do kterého budeme přidávát/aktualizujt soubory (kód).
+https://github.com/brzvska/IVS-
+
+Zvolili jsme GIT pro správu verzí. Vytvořili jsme na GitHubu privátní repozitář, do kterého budeme přidávát/aktualizujt soubory (kód).
 //TODO informaci, jak do repozitáře mohou nahlédnout vyučující/cvičící
