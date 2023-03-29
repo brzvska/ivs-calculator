@@ -1,8 +1,9 @@
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QLineEdit, QLabel
 from PyQt5.QtGui import *
-from PyQt5.QtCore import *  
+from PyQt5.QtCore import *
 
 from basic_math import math
 
@@ -18,6 +19,18 @@ class Window(QMainWindow):
         self.show()
 
     def ui_components(self):
+        # purple line
+        self.line = QLineEdit(self)
+        self.line.move(0, 0)
+        self.line.resize(400, 28)
+        self.line.setStyleSheet("QLineEdit { background-color: #9893DA; border-style: none; color: #72727E; font: 22px; }")
+        #TODO: style text inside field
+
+        # input field
+        self.textbox = QLineEdit(self)
+        self.textbox.move(12, 46)
+        self.textbox.resize(376, 68)
+        self.textbox.setStyleSheet("QLineEdit { background-color: #D9D9D9; border-style: none; border-radius: 20px; }")
 
         # Digit buttons
         NineButton = DigitButton("9", self)
@@ -49,7 +62,6 @@ class Window(QMainWindow):
 
         NullButton = DigitButton("0", self)
         NullButton.setGeometry(199, 354, 53, 53)
-
 
         # Math operation buttons
         MulButton = MathOperationButton("*", self)
@@ -104,8 +116,6 @@ class Window(QMainWindow):
         FuncSwitchButton = FunctionButton("f", self)
         FuncSwitchButton.setGeometry(325, 126, 53, 53)
 
-
-
     # # action method
     # def action(self):
     #     op = math.BasicMath(1)
@@ -117,7 +127,7 @@ class Button(QPushButton):
         super().__init__(name, parent)
         self.name = name
         self.setFont(QFont('Cascadia Mono', 18))
-        
+
 
 # subclass of class Button for digit button
 class DigitButton(Button):
@@ -131,8 +141,8 @@ class MathOperationButton(Button):
     def __init__(self, name, parent=None):
         super().__init__(name, parent)
         self.setStyleSheet("border-style: none; border-radius: 26px; background-color: #72727E; color: #242224;")
-           
-            
+
+
 # subclass of class Button for functional button        
 class FunctionButton(Button):
     def __init__(self, name, parent=None):
@@ -140,9 +150,10 @@ class FunctionButton(Button):
         self.setStyleSheet("border-style: none; border-radius: 26px; background-color: #797A9E; color: #F2F6F5;")
 
 
+
 # create pyqt5 app
 App = QApplication(sys.argv)
- 
+
 # create the instance of our Window
 window = Window()
 window.show()
