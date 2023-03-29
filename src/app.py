@@ -58,8 +58,7 @@ class Window(QMainWindow):
         PlusButton = MathOperationButton("+", self)
         PlusButton.setGeometry(325, 297, 53, 53)
 
-        MinusButton = MathOperationButton("-", s
-        elf)
+        MinusButton = MathOperationButton("-", self)
         MinusButton.setGeometry(325, 354, 53, 53)
 
         DivisionButton = MathOperationButton("/", self)
