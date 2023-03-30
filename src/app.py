@@ -11,12 +11,44 @@ from basic_math import math
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        # purple line
+        self.line = QLineEdit(self)
+        self.line.move(0, 0)
+        self.line.resize(400, 28)
+        self.line.setStyleSheet("QLineEdit { background-color: #9893DA; border-style: none; color: #72727E; font: 22px;}")
+        # TODO: style text inside field
+
+        # background frame
+        self.back = QLineEdit(self)
+        self.back.move(0, 120)
+        self.back.resize(400, 300)
+        self.back.setStyleSheet("QLineEdit {background-color: #D9D9D9; "
+                                            "border-style: none; "
+                                            "border-top-left-radius: 20px;"
+                                            "border-top-right-radius: 20px;}")
+
+        # input field
+        self.textbox = QLineEdit(self)
+        self.textbox.move(12, 40)
+        self.textbox.resize(376, 68)
+        self.textbox.setStyleSheet("QLineEdit { background-color: #D9D9D9; border-style: none; border-radius: 20px; }")
+
+        # setting window parameters
         self.setWindowTitle("Calculator")
         self.setFixedSize(QSize(400, 420))
-        self.setStyleSheet("QPushButton{height: 53px; width: 53px; border-radius: 26px; border: 1px solid black}")
+        self.setStyleSheet("QPushButton{height: 53px; width: 53px; border-radius: 26px; border: 1px solid black")
         self.setGeometry(100, 100, 600, 400)
+        # TODO: remove button parameters from here
+
+        # filling with buttons
         self.ui_components()
+
         self.show()
+
+
+
+
 
     def ui_components(self):
         # purple line
@@ -127,13 +159,17 @@ class Button(QPushButton):
         super().__init__(name, parent)
         self.name = name
         self.setFont(QFont('Cascadia Mono', 18))
-
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(20)
+        shadow.setOffset(3)
+        shadow.setColor(QColor("#A5A5A5"))
+        self.setGraphicsEffect(shadow)
 
 # subclass of class Button for digit button
 class DigitButton(Button):
     def __init__(self, name, parent=None):
         super().__init__(name, parent)
-        self.setStyleSheet(" border-style: none; border-radius: 26px; background-color: #9893DA; color: #F2F6F5;")
+        self.setStyleSheet("border-style: none; border-radius: 26px; background-color: #9893DA; color: #F2F6F5;")
 
 
 # subclass of class Button for math operation button        
