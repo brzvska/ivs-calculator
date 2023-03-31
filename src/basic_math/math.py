@@ -18,23 +18,23 @@ class BasicMath:
         else:
             return self.number / x
         
-    def procent(self):
+    def percent(self, number):
+        self.number = number
         return self.number / 100
     
-    def binary(self):
-        binaryRep = ""
-
-        while self > 0:
-            remainder = self % 2
+    def binary(self, number):
+        self.number = number
+        binaryRep = " "
+        while number > 0:
+            remainder = number % 2
             binaryRep += str(remainder)
-            self //= 2
+            number //= 2
 
-        binaryRep = self[::-1]
+        number = binaryRep[::-1]
+        return number
 
-        return binaryRep
-    
-    def pi():
+    def pi(self):
         return 3.14
-    
-    def exponent(): 
-        return 2.71
+
+    def exponent(self):
+        return 2.72
