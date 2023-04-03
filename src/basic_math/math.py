@@ -24,13 +24,19 @@ class BasicMath:
     
     def binary(self, number):
         self.number = number
-        binaryRep = " "
+        if "." in number:
+            return "Number is float"
+        if int(number) < 0:
+            return "Number is < 0"
+
+        number = int(number)
+        binaryNum = ""
         while number > 0:
             remainder = number % 2
-            binaryRep += str(remainder)
+            binaryNum += str(remainder)
             number //= 2
 
-        number = binaryRep[::-1]
+        number = binaryNum[::-1]
         return number
 
     def pi(self):
