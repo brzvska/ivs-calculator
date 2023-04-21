@@ -10,7 +10,7 @@ from PyQt5 import QtQuick
 from PyQt5 import QtCore
 from PyQt5.Qt import Qt
 
-from basic_math import math
+from arithmetic import *
 
 
 class Window(QMainWindow):
