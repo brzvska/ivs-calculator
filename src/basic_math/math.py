@@ -19,25 +19,28 @@ class BasicMath:
             return self.number / x
         
     def percent(self, number):
+        if not number.isnumeric():
+            return "Wrong value"
         self.number = number
         return self.number / 100
     
-    def binary(self, number):
+    def square(self, number, exp):
         self.number = number
-        if "." in number:
-            return "Number is float"
-        if int(number) < 0:
-            return "Number is < 0"
+        self.exp = exp
+        result = 'number:' + str(number) + " " + "exp:" + str(exp)
+        return str(result)
 
-        number = int(number)
-        binaryNum = ""
-        while number > 0:
-            remainder = number % 2
-            binaryNum += str(remainder)
-            number //= 2
+    def equal(self, text: str):
+        # TODO это для переменных для корня
+        splitted_string = text.split('(')
+        splitted_string2 = splitted_string[1].split(')')
+        exp = splitted_string2[0]
 
-        number = binaryNum[::-1]
-        return number
+        str = text.split(')')
+        number = str[1]
+
+        return exp + "," + number
+
 
     def pi(self):
         return 3.14
