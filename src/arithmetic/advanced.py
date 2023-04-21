@@ -2,8 +2,9 @@
 # @file basic.py
 # Implementation of advanced mathematical operations for the calculator
 
-from basic import Basic
+from .basic import Basic
 import math
+
 
 # Base class "Advanced"
 # Representation of advanced mathematical operations
