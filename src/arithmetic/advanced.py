@@ -12,13 +12,6 @@ class Advanced(Basic):
     def __init__(self):
         super().__init__()
 
-    # Method for % operation
-    # @param self Object pointer
-    # @param x Operand
-    # @return Given number translated to percent
-    def percent(self, x: float) -> float:
-        return self.div(x, 100)
-
     # Static method for exponentiation operation
     # @param base Base number
     # @param exponent Exponent number
