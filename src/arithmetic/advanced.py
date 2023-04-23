@@ -1,8 +1,10 @@
 # @package arithmetic
 # @file basic.py
 # Implementation of advanced mathematical operations for the calculator
+import sys
 
 from .basic import Basic
+from .exceptions import BadOperandException
 import math
 
 
@@ -23,28 +25,46 @@ class Advanced(Basic):
 
     # Static method for factorial computation
     # @param x Operand
-    # @return Factorial of a given number
+    # @return Factorial of a given number, -1 if error occured
     @staticmethod
     def factorial(x: int) -> int:
-        result = 1
-        for num in range(1, x + 1):
-            result = result * num
-        return result
+        try:
+            if x < 0:
+                raise BadOperandException
+
+            result = 1
+            for num in range(1, x + 1):
+                result = result * num
+            return result
+        except BadOperandException:
+            sys.stderr.write("Error: wrong factorial operand")
 
     # Static method for logarithms computation
     # @param base Base number
     # @param number Antilogarithm number
     # @return Logarithm value of given number with specific base
     @staticmethod
-    def logarithm(base: int, number: int) -> float:
-        return math.log(number, base)
+    def logarithm(number: int, base: int) -> float:
+        try:
+            if base == 1 or base <= 0 or number <= 0:
+                raise BadOperandException
+            return math.log(number, base)
+        except BadOperandException:
+            sys.stderr.write("Error: wrong logarithm base")
+
 
     # Method for n-th root computations
     # @param self Object pointer
     # @param degree Root degree
     # @param radicant The number from which the root has to be extracted
     def rootn(self, degree: int, radicand: float):
-        return radicand**(self.div(1, degree))
+        try:
+            if degree % 2 == 0 and radicand < 0:
+                raise BadOperandException
+            return radicand**(self.div(1, degree))
+        except BadOperandException:
+            sys.stderr.write("Error: wrong root expression")
+
 
     # Static method for sinus function
     # @param x An angle in radians (pi/2, pi/4, pi/3, etc.)
