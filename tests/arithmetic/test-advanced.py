@@ -46,6 +46,12 @@ class PowerTests(unittest.TestCase):
         exp = 4
         self.assertEqual(2063.66684176, self.op.power(base, exp))
 
+    def test_bigger_num(self):
+        """Some bigger number"""
+        base = 10
+        exp = 10
+        self.assertEqual(10000000000, self.op.power(base, exp))
+
 
 class FactorialTests(unittest.TestCase):
     print("\tTesting factorial operation")
@@ -73,7 +79,16 @@ class FactorialTests(unittest.TestCase):
         num = 10
         self.assertEqual(3628800, self.op.factorial(num))
 
-    #todo: float test
+    def test_float(self):
+        """Float number"""
+        num = 3.3
+        self.assertRaises(BadOperandException, self.op.factorial(num))
+
+    def test_negative_num_exception(self):
+        """Negative number"""
+        num = -10
+        self.assertRaises(BadOperandException, self.op.factorial(num))
+
 
 
 class LogarithmTests(unittest.TestCase):
@@ -111,6 +126,25 @@ class LogarithmTests(unittest.TestCase):
         num = 15
         self.assertEqual(3.90689059561, self.op.logarithm(num, base))
 
+    def test_negative_num_exception(self):
+        """Negative number"""
+        base = 2
+        num = -32
+        self.assertRaises(BadOperandException, self.op.logarithm(num, base))
+
+    def test_negative_base_exception(self):
+        """Negative base"""
+        base = -2
+        num = 32
+        self.assertRaises(BadOperandException, self.op.logarithm(num, base))
+
+    def test_both_negative_exception(self):
+        """Both base and number are negative"""
+        base = -2
+        num = -32
+        self.assertRaises(BadOperandException, self.op.logarithm(num, base))
+
+
 
 class RootTests(unittest.TestCase):
     print("\tTesting root operation")
@@ -136,7 +170,19 @@ class RootTests(unittest.TestCase):
         num = -27
         self.assertEqual(-3, self.op.rootn(degree, num), "Error")
 
+    def test_negative_num_exception(self):
+        """Negative radicant (number)"""
+        degree = 3
+        num = -27
+        self.op.assertRaises(BadOperandException, self.op.rootn((degree, num)))
+
     def test_float(self):
         degree = 2
         num = 14
         self.assertEqual(3.74165738677, self.op.rootn(degree, num))
+
+    def test_zero_radicant(self):
+        """Radicant is 0"""
+        degree = 3
+        num = 0
+        self.op.assertEqual(0, self.op.rootn(degree, num))
