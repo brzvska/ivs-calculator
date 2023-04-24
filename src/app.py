@@ -1,3 +1,6 @@
+# Authors: Alina Vinogradova, Anastasiia Berezovska, Maryia Mazurava
+
+
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
@@ -7,7 +10,7 @@ from PyQt5 import QtQuick
 from PyQt5 import QtCore
 from PyQt5.Qt import Qt
 
-from basic_math import math
+from arithmetic import *
 
 
 class Window(QMainWindow):
@@ -18,7 +21,7 @@ class Window(QMainWindow):
         self.line = QLineEdit(self)
         self.line.setReadOnly(True)
         self.line.move(0, 0)
-        self.line.resize(400, 28)
+        self.line.resize(460, 28)
         self.line.setStyleSheet("QLineEdit {background-color: #9893DA; border-style: none; "
                                 "color: #72727E; font: 22px;}")
 
@@ -26,7 +29,7 @@ class Window(QMainWindow):
         self.back = QLineEdit(self)
         self.back.setReadOnly(True)
         self.back.move(0, 120)
-        self.back.resize(400, 300)
+        self.back.resize(453, 300)
         self.back.setStyleSheet("QLineEdit {background-color: #D9D9D9;" "border-style: none;"
                                 "border-top-left-radius: 20px; border-top-right-radius: 20px;}")
 
@@ -34,26 +37,25 @@ class Window(QMainWindow):
         self.textbox = QLineEdit(self)
         self.textbox.setReadOnly(True)
         self.textbox.move(12, 40)
-        self.textbox.resize(376, 68)
+        self.textbox.resize(428, 68)
         self.textbox.setStyleSheet("QLineEdit { background-color: #D9D9D9; border-style: none; border-radius: 20px; }")
 
         # setting window parameters
         self.setWindowTitle("Calculator")
-        self.setFixedSize(QSize(400, 420))
+        self.setFixedSize(QSize(453, 420))
         self.setGeometry(100, 100, 600, 400)
 
         self.label = QLabel(self)
-        self.label.setGeometry(20, 57, 350, 45)
+        self.label.setGeometry(20, 57, 410, 45)
         self.label.setAlignment(Qt.AlignRight)
         self.label.setFont(QFont('Cascadia Mono', 25))
         self.label.setStyleSheet("letter-spacing: 2px; color: #72727E;")
 
         # filling with buttons
-        self.is_default_frame = True
         self.ui_components()
         self.show()
 
-
+    # Keyboard manipulating
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_1:
             self.action_button(1)
@@ -91,10 +93,8 @@ class Window(QMainWindow):
             self.action_button("right_par")
         elif event.key() == Qt.Key_Period:
             self.action_button("point")
-        elif event.key() == Qt.Key_Delete:
+        elif event.key() == Qt.Key_Backspace:
             self.action_del()
-        elif event.key() == Qt.Key_Percent:
-            self.action_percent()
         elif event.key() == Qt.Key_Equal:
             self.action_equal()
 
@@ -138,6 +138,54 @@ class Window(QMainWindow):
         point_button = MathOperationButton(".", self)
         point_button.setGeometry(136, 354, 53, 53)
 
+        mul_button = MathOperationButton("×", self)
+        mul_button.setGeometry(325, 240, 53, 53)
+
+        plus_button = MathOperationButton("+", self)
+        plus_button.setGeometry(325, 297, 53, 53)
+
+        minus_button = MathOperationButton("-", self)
+        minus_button.setGeometry(325, 354, 53, 53)
+
+        division_button = MathOperationButton("÷", self)
+        division_button.setGeometry(325, 183, 53, 53)
+
+        a_button = MathOperationButton("a^", self)  # TODO переделать знак
+        a_button.setGeometry(73, 354, 53, 53)
+
+        factorial_button = MathOperationButton("!", self)
+        factorial_button.setGeometry(10, 354, 53, 53)
+
+        logarithm_button = MathOperationButton("ln", self)
+        logarithm_button.setGeometry(10, 240, 53, 53)
+
+        square_button = MathOperationButton("√", self)
+        square_button.setGeometry(73, 240, 53, 53)
+
+        left_par_button = MathOperationButton("(", self)
+        left_par_button.setGeometry(10, 183, 53, 53)
+
+        pi_button = MathOperationButton("π", self)
+        pi_button.setGeometry(10, 297, 53, 53)
+
+        right_par_button = MathOperationButton(")", self)
+        right_par_button.setGeometry(73, 183, 53, 53)
+
+        exponent_button = MathOperationButton("e", self)
+        exponent_button.setGeometry(73, 297, 53, 53)
+
+        sin_button = MathOperationButton("sin", self)
+        sin_button.setGeometry(388, 183, 53, 53)
+
+        cos_button = MathOperationButton("cos", self)
+        cos_button.setGeometry(388, 240, 53, 53)
+
+        tan_button = MathOperationButton("tan", self)
+        tan_button.setGeometry(388, 297, 53, 53)
+
+        ctg_button = MathOperationButton("ctg", self)
+        ctg_button.setGeometry(388, 354, 53, 53)
+
         # functional buttons:
         delete_button = FunctionButton("←", self)
         delete_button.setGeometry(73, 126, 53, 53)
@@ -145,16 +193,18 @@ class Window(QMainWindow):
         clear_button = FunctionButton("C", self)
         clear_button.setGeometry(10, 126, 53, 53)
 
-        func_switch_button = FunctionButton("f", self)
-        func_switch_button.setGeometry(325, 126, 53, 53)
-
-        if self.is_default_frame == True:
-            main_frame = DefaultFrame
-            main_frame.default_frame_ui_components(self)
-
-        # mouse manipulating with buttons
+        # mouse manipulating with buttons:
+        mul_button.clicked.connect(lambda: self.action_button("mul"))
+        division_button.clicked.connect(lambda: self.action_button("div"))
+        plus_button.clicked.connect(lambda: self.action_button("plus"))
+        minus_button.clicked.connect(lambda: self.action_button("minus"))
+        left_par_button.clicked.connect(lambda: self.action_button("left_par"))
+        right_par_button.clicked.connect(lambda: self.action_button("right_par"))
+        square_button.clicked.connect(self.action_square)
+        exponent_button.clicked.connect(lambda: self.action_button("exp"))
+        pi_button.clicked.connect(lambda: self.action_button("pi"))
         null_button.clicked.connect(lambda: self.action_button(0))
-        one_button.clicked.connect(lambda: self.action_button(1))
+        one_button.clicked.connect(lambda: self.action_nums(1))
         two_button.clicked.connect(lambda: self.action_button(2))
         three_button.clicked.connect(lambda: self.action_button(3))
         four_button.clicked.connect(lambda: self.action_button(4))
@@ -165,22 +215,17 @@ class Window(QMainWindow):
         nine_button.clicked.connect(lambda: self.action_button(9))
         point_button.clicked.connect(lambda: self.action_button("point"))
         delete_button.clicked.connect(self.action_del)
+        equal_button.clicked.connect(self.action_equal)
         clear_button.clicked.connect(self.action_clear)
-        func_switch_button.clicked.connect(self.action_switch)
+        sin_button.clicked.connect(lambda: self.action_trigonometry("sin"))
+        cos_button.clicked.connect(lambda: self.action_trigonometry("cos"))
+        tan_button.clicked.connect(lambda: self.action_trigonometry("tan"))
+        ctg_button.clicked.connect(lambda: self.action_trigonometry("ctg"))
+        factorial_button.clicked.connect(self.action_factorial)
+        logarithm_button.clicked.connect(self.action_logarithm)
+        a_button.clicked.connect(self.action_a)
 
-    def action_switch(self):
-        if self.is_default_frame == True:
-            #TODO ВЫРИСОВАТЬ ВТОРОЙ ФРЕЙМ
-            advanced_frame = AdvancedFrame
-            advanced_frame.advanced_frame_ui_components(self)
-            self.is_default_frame = False
-
-        elif self.is_default_frame == False:
-            #TODO ВЫРИСОВАТЬ ПЕРВЫЙ ФРЕЙМ
-            default_frame = DefaultFrame
-            default_frame.default_frame_ui_components(self)
-            self.is_default_frame = True
-
+# ---------------------------------------   BUTTON ACTIONS  ------------------------------------------------------------
     # Generate text on input field
     def action_button(self, param):
         switcher = {
@@ -207,109 +252,69 @@ class Window(QMainWindow):
         text = self.label.text()
         self.label.setText(text + str(switcher.get(param)))
 
+    # Generate text on input field
+    def action_nums(self, param):
+        switcher = {
+            0: "0",
+            1: "1",
+            2: "2",
+            3: "3",
+            4: "4",
+            5: "5",
+            6: "6",
+            7: "7",
+            8: "8",
+            9: "9",
+        }
+        text = self.label.text()
+        self.label.setText(text + str(switcher.get(param)))
+
+    def action_square(self):
+        exp = self.label.text()  # exponent
+        self.label.clear()
+        self.label.setText("sqrt({})".format(exp))
+
+    def action_factorial(self):
+        text = self.label.text()
+        self.label.setText(str(text) + "!")
+
+    def action_logarithm(self):
+        number = self.label.text()
+        self.label.clear()
+        self.label.setText('ln({})'.format(number))
+
+    def action_a(self):
+        number = self.label.text()
+        self.label.setText(number + '^')
+
+    def action_trigonometry(self, param):
+        switcher = {
+            "sin": "sin",
+            "cos": "cos",
+            "tan": "tan",
+            "ctg": "ctg",
+        }
+        self.label.setText(str(switcher.get(param)))
+
+    def action_equal(self):
+        text = self.label.text()
+        result = math.BasicMath.equal(self, text)
+        self.label.clear()
+        self.label.setText(str(result))
+
     # Remove a single symbol
     def action_del(self):
         text = self.label.text()
         self.label.setText(text[:len(text) - 1])
 
+    # Removes all text from input field
     def action_clear(self):
-        self.label.setText("")
-
-    def action_percent(self):
-        text = int(self.label.text())
-        result = math.BasicMath.percent(self, text)
-        self.label.setText(str(result))
-
-    # Convert a number into binary form
-    def action_binary(self):
-        text = self.label.text()
-        result = math.BasicMath.binary(self, text)
-        self.label.setText(str(result))
+        self.label.clear()
 
 
-class DefaultFrame(Window):
-    def __init__(self, name, parent=None):
-        super().__init__(name, parent)
-        self.name = name
+# ---------------------------------------   END BUTTON ACTIONS   -------------------------------------------------------
 
-    def default_frame_ui_components(self):
-        # math operation buttons:
-        mul_button = MathOperationButton("×", self)
-        mul_button.setGeometry(325, 240, 53, 53)
-
-        plus_button = MathOperationButton("+", self)
-        plus_button.setGeometry(325, 297, 53, 53)
-
-        minus_button = MathOperationButton("-", self)
-        minus_button.setGeometry(325, 354, 53, 53)
-
-        division_button = MathOperationButton("÷", self)
-        division_button.setGeometry(325, 183, 53, 53)
-
-        greater_button = MathOperationButton(">", self)
-        greater_button.setGeometry(73, 354, 53, 53)
-
-        less_button = MathOperationButton("<", self)
-        less_button.setGeometry(10, 354, 53, 53)
-
-        binary_button = MathOperationButton("BIN", self)
-        binary_button.setGeometry(10, 240, 53, 53)
-
-        percent_button = MathOperationButton("%", self)
-        percent_button.setGeometry(73, 240, 53, 53)
-
-        left_par_button = MathOperationButton("(", self)
-        left_par_button.setGeometry(10, 183, 53, 53)
-
-        pi_button = MathOperationButton("π", self)
-        pi_button.setGeometry(10, 297, 53, 53)
-
-        right_par_button = MathOperationButton(")", self)
-        right_par_button.setGeometry(73, 183, 53, 53)
-
-        exponent_button = MathOperationButton("e", self)
-        exponent_button.setGeometry(73, 297, 53, 53)
-
-        # manipulating with mouse
-        mul_button.clicked.connect(lambda: self.action_button("mul"))
-        division_button.clicked.connect(lambda: self.action_button("div"))
-        plus_button.clicked.connect(lambda: self.action_button("plus"))
-        minus_button.clicked.connect(lambda: self.action_button("minus"))
-        left_par_button.clicked.connect(lambda: self.action_button("left_par"))
-        right_par_button.clicked.connect(lambda: self.action_button("right_par"))
-        percent_button.clicked.connect(self.action_percent)
-        binary_button.clicked.connect(self.action_binary)
-        exponent_button.clicked.connect(lambda: self.action_button("exp"))
-        pi_button.clicked.connect(lambda: self.action_button("pi"))
-
-
-# Subclass of class Window for second frame with advanced functions
-class AdvancedFrame(Window):
-    def __init__(self, name, parent=None):
-        super().__init__(name, parent)
-        self.name = name
-
-    def advanced_frame_ui_components(self):
-        # buttons
-        cosinus_button = MathOperationButton("cos", self)
-        cosinus_button.setGeometry(325, 240, 53, 53)
-
-        tan_button = MathOperationButton("tan", self)
-        tan_button.setGeometry(325, 297, 53, 53)
-
-        ctg_button = MathOperationButton("ctg", self)
-        ctg_button.setGeometry(325, 354, 53, 53)
-
-        sinus_button = MathOperationButton("sin", self)
-        sinus_button.setGeometry(325, 183, 53, 53)
-
-        greater_button = MathOperationButton(">", self)
-        greater_button.setGeometry(73, 354, 53, 53)
-
-        less_button = MathOperationButton("<", self)
-        less_button.setGeometry(10, 354, 53, 53)
-
-
+# ---------------------------------------   BUTTON SUBCLASSES   --------------------------------------------------------
 class Button(QPushButton):
     def __init__(self, name, parent=None):
         super().__init__(name, parent)
@@ -342,6 +347,10 @@ class FunctionButton(Button):
         super().__init__(name, parent)
         self.setStyleSheet("border-style: none; border-radius: 26px; background-color: #797A9E; color: #F2F6F5;")
 
+
+# ------------------------------------------    END BUTTON SUBCLASSES   ------------------------------------------------
+
+# ------------------------------------------    MAIN PROGRAM    --------------------------------------------------------
 
 App = QApplication(sys.argv)
 window = Window()
