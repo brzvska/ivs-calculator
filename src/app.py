@@ -52,6 +52,9 @@ class Window(QMainWindow):
         self.label.setFont(QFont('Cascadia Mono', 25))
         self.label.setStyleSheet("letter-spacing: 2px; color: #72727E;")
 
+        # boolean flag for switching help window
+        self.flag = True
+
         # filling with buttons
         self.ui_components()
         self.show()
@@ -317,10 +320,15 @@ class Window(QMainWindow):
         self.label.clear()
 
     def action_help(self):
-        self.window = QMainWindow()
-        self.second_window = HelpWindow()
-        self.second_window.set_ui()
-        self.second_window.show()
+        if self.flag:
+            self.flag = False
+            self.window = QMainWindow()
+            self.second_window = HelpWindow()
+            self.second_window.set_ui()
+            self.second_window.show()
+        else:
+            self.flag = True
+            self.second_window.close()
 
 
 # ---------------------------------------   END BUTTON ACTIONS   -------------------------------------------------------
@@ -333,7 +341,7 @@ class HelpWindow(QMainWindow):
     def set_ui(self):
         self.setWindowTitle("Help Information")
         self.setFixedSize(QSize(543, 340))
-        self.setGeometry(200, 200, 600, 400)
+        self.setGeometry(600, 130, 600, 400)
 
         # label "how to use calculator"
         self.first_label = QLabel(self)
@@ -341,7 +349,7 @@ class HelpWindow(QMainWindow):
         self.first_label.setAlignment(Qt.AlignCenter)
         self.first_label.setFont(QFont('Cascadia Mono', 11))
         self.first_label.setStyleSheet("letter-spacing: 2px; color: #fff; background-color: #797A9E")
-        self.first_label.setText("How to use calculator:")
+        self.first_label.setText("Usage:")
 
         # label on the left side
         self.second_label = QLabel(self)
