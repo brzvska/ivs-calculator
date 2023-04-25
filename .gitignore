@@ -2,7 +2,7 @@
 design.ui
 output.py
 __pycache__/
-src/calculator/build
-src/calculator/dist
+src/build
+src/dist
 venv/
 .DS_Store/
