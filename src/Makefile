@@ -1,5 +1,5 @@
 PY = py
-APP = app.py
+APP = calculator/app.py
 ZIP = xberez04_xvinog00_xmazur08
 
 .PHONY: all pack clean test doc run profile setup test-basic test-advanced
@@ -13,8 +13,10 @@ test-advanced:
 	$(PY) -m unittest -v test-advanced.py
 
 run:
-	$(PY) calculator/$(APP)
+	$(PY) $(APP)
 
 setup: requirements.txt
 	pip install -r $<
 
+profile:
+	$(PY) -m cProfile profiling.py < test.txt

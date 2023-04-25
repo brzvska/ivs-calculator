@@ -42,7 +42,7 @@ class PowerTests(unittest.TestCase):
         """Float base"""
         base = 6.74
         exp = 4
-        self.assertEqual(2063.66684176, self.op.power(base, exp))
+        self.assertEqual(2063.6668418, self.op.power(base, exp))
 
     def test_bigger_num(self):
         """Some bigger number"""
@@ -70,7 +70,7 @@ class FactorialTests(unittest.TestCase):
     def test_negative(self):
         """Negative argument"""
         num = -5
-        self.assertEqual(None, self.op.factorial(num))
+        self.assertRaises(BadOperandException, self.op.factorial, num)
 
     def test_bigger(self):
         """Some mid number"""
@@ -80,12 +80,12 @@ class FactorialTests(unittest.TestCase):
     def test_float(self):
         """Float number"""
         num = 3.3
-        self.assertRaises(BadOperandException, self.op.factorial(num))
+        self.assertRaises(BadOperandException, self.op.factorial, num)
 
     def test_negative_num_exception(self):
         """Negative number"""
         num = -10
-        self.assertRaises(BadOperandException, self.op.factorial(num))
+        self.assertRaises(BadOperandException, self.op.factorial, num)
 
 
 @colorize(color=YELLOW)
@@ -104,42 +104,42 @@ class LogarithmTests(unittest.TestCase):
         """Negative base"""
         base = -2
         num = 8
-        self.assertEqual(None, self.op.logarithm(num, base))
+        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
 
     def test_negative_num(self):
         """Negative log body"""
         base = 3
         num = -27
-        self.assertEqual(None, self.op.logarithm(num, base))
+        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
 
     def test_both_negative(self):
         """Negative both base and number"""
         base = -3
         num = -10
-        self.assertEqual(None, self.op.logarithm(num, base))
+        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
 
     def test_float_result(self):
         base = 2
         num = 15
-        self.assertEqual(3.90689059561, self.op.logarithm(num, base))
+        self.assertEqual(3.9068906, self.op.logarithm(num, base))
 
     def test_negative_num_exception(self):
         """Negative number"""
         base = 2
         num = -32
-        self.assertRaises(BadOperandException, self.op.logarithm(num, base))
+        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
 
     def test_negative_base_exception(self):
         """Negative base"""
         base = -2
         num = 32
-        self.assertRaises(BadOperandException, self.op.logarithm(num, base))
+        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
 
     def test_both_negative_exception(self):
         """Both base and number are negative"""
         base = -2
         num = -32
-        self.assertRaises(BadOperandException, self.op.logarithm(num, base))
+        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
 
 
 @colorize(color=BLUE)
@@ -158,7 +158,7 @@ class RootTests(unittest.TestCase):
         """Negative degree"""
         degree = -2
         num = 3
-        self.assertEqual(0.577350269, self.op.rootn(degree, num))
+        self.assertEqual(0.5773503, self.op.rootn(degree, num))
 
     def test_negative_num(self):
         """Negative body"""
@@ -168,20 +168,20 @@ class RootTests(unittest.TestCase):
 
     def test_negative_num_exception(self):
         """Negative radicant (number)"""
-        degree = 3
+        degree = 2
         num = -27
-        self.op.assertRaises(BadOperandException, self.op.rootn((degree, num)))
+        self.assertRaises(BadOperandException, lambda: self.op.rootn(degree, num))
 
     def test_float(self):
         degree = 2
         num = 14
-        self.assertEqual(3.74165738677, self.op.rootn(degree, num))
+        self.assertEqual(3.7416574, self.op.rootn(degree, num))
 
     def test_zero_radicant(self):
         """Radicant is 0"""
         degree = 3
         num = 0
-        self.op.assertEqual(0, self.op.rootn(degree, num))
+        self.assertEqual(0, self.op.rootn(degree, num))
 
 
 if __name__ == '__main__':
