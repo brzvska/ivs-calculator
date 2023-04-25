@@ -19,7 +19,7 @@ class Advanced(Basic):
     # @param base Base number
     # @param exponent Exponent number
     # @return Power of the given number
-    def power(self, base: float, exponent: int) -> float:
+    def power(self, base: float, exponent: float) -> float:
         return self.int_translate(pow(base, exponent))
 
     # Static method for factorial computation
@@ -45,9 +45,10 @@ class Advanced(Basic):
         try:
             if base == 1 or base <= 0 or number <= 0:
                 raise BadOperandException
-            return self.int_translate(math.log(number, base))
         except BadOperandException:
             sys.stderr.write("Error: wrong logarithm base")
+
+        return self.int_translate(math.log(number, base))
 
 
     # Method for n-th root computations
@@ -58,9 +59,10 @@ class Advanced(Basic):
         try:
             if degree % 2 == 0 and radicand < 0:
                 raise BadOperandException
-            return self.int_translate(radicand**(self.div(1, degree)))
         except BadOperandException:
             sys.stderr.write("Error: wrong root expression")
+
+        return self.int_translate(self.power(radicand, self.div(1, degree)))
 
 
     # Static method for sinus function

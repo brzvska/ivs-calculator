@@ -49,6 +49,8 @@ class Basic:
 
     @staticmethod
     def int_translate(num):
+        if isinstance(num, complex):
+            num = num.real
         if float(num).is_integer():
             return int(num)
         else:
