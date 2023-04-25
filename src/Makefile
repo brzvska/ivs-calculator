@@ -1,10 +1,10 @@
 APP = calculator/app.py
 ZIP = xberez04_xvinog00_xmazur08
 
-ifeq ($(UNAME), Linux)
-PY = python3.10
+ifeq ($(OS), Windows_NT)
+PY = pyx
 else
-PY = py
+PY = python3.10
 endif
 
 
@@ -25,4 +25,4 @@ setup: requirements.txt
 	pip install -r $<
 
 profile: profiling.py
-	$(PY) -m profile -o ../profiling/output10_1 $< < ../profiling/10_1.txt
+	$(PY) -m profile -o ../profiling/output10_1 $< < ../profiling/10_1
