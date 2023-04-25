@@ -11,7 +11,8 @@ from PyQt5 import QtQuick
 from PyQt5 import QtCore
 from PyQt5.Qt import Qt
 
-from expressions import BasicMathParsing as BMP
+from expressions import MathParsing as MP
+
 
 
 class Window(QMainWindow):
@@ -154,13 +155,13 @@ class Window(QMainWindow):
         division_button = MathOperationButton("÷", self)
         division_button.setGeometry(325, 183, 53, 53)
 
-        a_button = MathOperationButton("a^", self)  # TODO переделать знак
+        a_button = MathOperationButton("^", self)
         a_button.setGeometry(73, 354, 53, 53)
 
         factorial_button = MathOperationButton("!", self)
         factorial_button.setGeometry(10, 354, 53, 53)
 
-        logarithm_button = MathOperationButton("ln", self)
+        logarithm_button = MathOperationButton("log", self)
         logarithm_button.setGeometry(10, 240, 53, 53)
 
         square_button = MathOperationButton("√", self)
@@ -280,33 +281,36 @@ class Window(QMainWindow):
     def action_square(self):
         exp = self.label.text()  # exponent
         self.label.clear()
-        self.label.setText("sqrt({})".format(exp))
+        self.label.setText("sqrt({})(".format(exp))
 
     def action_factorial(self):
-        text = self.label.text()
-        self.label.setText(str(text) + "!")
+        number = self.label.text()
+        result = MP().parse_factorial(number)
+        self.label.setText(str(result))
 
     def action_logarithm(self):
         number = self.label.text()
         self.label.clear()
-        self.label.setText('ln({})'.format(number))
+        self.label.setText('log({})('.format(number))
 
     def action_a(self):
         number = self.label.text()
         self.label.setText(number + '^')
 
     def action_trigonometry(self, param):
+        number = self.label.text()
         switcher = {
             "sin": "sin",
             "cos": "cos",
             "tan": "tan",
             "ctg": "ctg",
         }
-        self.label.setText(str(switcher.get(param)))
+        result = MP().parse_trigonometry(str(switcher.get(param)), number)
+        self.label.setText(str(result))
 
     def action_equal(self):
         text = self.label.text()
-        result = BMP().parse(text)
+        result = MP().parse(text)
         self.label.clear()
         self.label.setText(str(result))
 

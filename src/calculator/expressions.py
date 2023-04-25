@@ -1,6 +1,11 @@
-from stack import Stack
-import re
+"""
+@package calculator
+@file expressions.py
+@author Maryia Mazurava
+Implementation of math logic
+"""
 
+from stack import Stack
 from arithmetic.basic import Basic
 from arithmetic.advanced import Advanced
 
@@ -8,16 +13,26 @@ LEFT_PAR = "("
 RIGHT_PAR = ")"
 
 
-class BasicMathParsing:
+"""
+Base class "BasicMathParsing"
+Representation of basic math logic
+"""
+class MathParsing:
+
+    """ Constructor """
     def __init__(self):
-        self.operators = {'+': 1, '-': 1, '×': 2, '÷': 2}
+        self.operators = {'+': 1, '-': 1, '×': 2, '÷': 2, '^': 3}
         self.adv = Advanced()
         self.basic = Basic()
         self.tokens = []
         self.operator_stack = Stack()
         self.operand_stack = Stack()
 
-    def split_expression(self, expression):
+    """
+    Method for splitting an expression into tokens
+    @param expression Expression string
+    """
+    def split_expression(self, expression: str):
         number = ""
         for char in expression:
             if char.isnumeric() or char == ".":
@@ -31,12 +46,15 @@ class BasicMathParsing:
                 self.tokens.append("2.7183")
             elif char == "π":
                 self.tokens.append("3.1416")
-
         if number != "":
             self.tokens.append(number)
 
+    """
+    Method for checking if the expression is correct
+    @return True if expression is correct, False instead
+    """
     def check_semantics(self):
-        # Pars checking
+        """ Parentheses balance checking """
         pars = []
         for token in self.tokens:
             if token == LEFT_PAR:
@@ -48,7 +66,7 @@ class BasicMathParsing:
         if pars:
             return False
 
-        # Check if the operators are used correctly
+        """ Checking if the operators are used correctly """
         prev_token = None
         for token in self.tokens:
             if prev_token is None:
@@ -70,7 +88,7 @@ class BasicMathParsing:
         if self.tokens[-1] in self.operators or self.tokens[-1] == LEFT_PAR:
             return False
 
-        # Checking the number format
+        """ Checking the number format and possible negative numbers """
         prev_token = None
         for token in self.tokens:
             if prev_token is None:
@@ -79,7 +97,8 @@ class BasicMathParsing:
                 if prev_token == "-" and self.tokens[index + 1][0].isnumeric():
                     self.tokens[index] += self.tokens[index + 1]
                     del self.tokens[index + 1]
-            elif token not in self.operators and token != RIGHT_PAR and token != LEFT_PAR:
+                    pass
+            if token not in self.operators and token != RIGHT_PAR and token != LEFT_PAR:
                 if token[0] == ".":
                     return False
                 if "." in token:
@@ -92,6 +111,7 @@ class BasicMathParsing:
                     else:
                         prev_token = token
                 if len(token) >= 2:
+                    print("here")
                     if token[0] == "0" and token[1] != ".":
                         return False
                 if prev_token == "-":
@@ -104,11 +124,31 @@ class BasicMathParsing:
 
         return True
 
-    def parse(self, expression):
+    """
+    Main method for parsing the expression using stack.py module
+    @param expression Expression string from app.py module
+    @return Result string of the expression or error message
+    """
+    def parse(self, expression: str):
+        if len(expression) > 3 and expression[0:3] == "log":
+            result, index = self.parse_advanced("log", expression)
+            if result == "":
+                return "Couldn't parse expression"
+            expression = expression.replace(expression[:index], result)
+        if len(expression) > 4 and expression[0:4] == "sqrt":
+            result, index = self.parse_advanced("sqrt", expression)
+            if result == "":
+                return "Couldn't parse expression"
+            expression = expression.replace(expression[:index], result)
+        if len(expression) == 0:
+            return "Enter math expression"
+
         self.split_expression(expression)
-        # print(self.tokens)
+
         if self.check_semantics() is False:
-            return "Couldn't parse expression."
+            return "Couldn't parse expression"
+
+        """ Start parsing an expression """
         for token in self.tokens:
             if token not in self.operators and token != LEFT_PAR and token != RIGHT_PAR:
                 self.operand_stack.push(token)
@@ -118,7 +158,8 @@ class BasicMathParsing:
                 while not self.operator_stack.top() == LEFT_PAR:
                     operand2 = float(self.operand_stack.pop())
                     operand1 = float(self.operand_stack.pop())
-                    self.evaluate(operand1, operand2)
+                    if self.evaluate(operand1, operand2) is False:
+                        return "Couldn't parse expression"
                 if not self.operator_stack.is_empty() and self.operator_stack.top() == LEFT_PAR:
                     self.operator_stack.pop()
             elif token in self.operators:
@@ -133,19 +174,163 @@ class BasicMathParsing:
                     else:
                         operand2 = float(self.operand_stack.pop())
                         operand1 = float(self.operand_stack.pop())
-                        self.evaluate(operand1, operand2)
+                        if self.evaluate(operand1, operand2) is False:
+                            return "Couldn't parse expression"
 
                         self.operator_stack.push(token)
 
         while not self.operator_stack.is_empty():
             operand2 = float(self.operand_stack.pop())
             operand1 = float(self.operand_stack.pop())
-            self.evaluate(operand1, operand2)
+            if self.evaluate(operand1, operand2) is False:
+                return "Couldn't parse expression"
 
         self.tokens = []
 
         return str(self.operand_stack.top())
 
+    """
+    Main method for parsing the expression using stack.py module
+    @param func Function name (log or sqrt)
+    @param exspression Expression to evaluate
+    @return Result of the parsing. Result is "" if error occurred
+    """
+    def parse_advanced(self, func, expression):
+        if func == "sqrt":
+            result = ""
+            degree = ""
+            base = ""
+            start = None
+            par_count = 0
+            for char in expression[4:]:
+                if char == LEFT_PAR:
+                    par_count += 1
+                if char == RIGHT_PAR:
+                    par_count -= 1
+
+                degree += char
+
+                if char == RIGHT_PAR and par_count == 0:
+                    index = expression.index(char)
+                    start = char
+                    break
+
+            par_count = 0
+            if start == RIGHT_PAR:
+                index_end = index + 1
+                for char in expression[index + 1:]:
+                    if char == LEFT_PAR:
+                        par_count += 1
+                    if char == RIGHT_PAR:
+                        par_count -= 1
+
+                    base += char
+                    index_end += 1
+
+                    if char == RIGHT_PAR and par_count == 0:
+                        break
+
+            if degree != "()" and base != "()":
+                degree_res = self.parse(degree)
+                base_res = self.parse(base)
+
+                if base_res != "Couldn't parse expression" and degree_res != "Couldn't parse expression":
+                    if degree_res.isnumeric():
+                        result = self.adv.rootn(int(degree_res), float(base_res))
+        else:
+            result = ""
+            degree = ""
+            base = ""
+            start = None
+            par_count = 0
+            for char in expression[3:]:
+                if char == LEFT_PAR:
+                    par_count += 1
+                if char == RIGHT_PAR:
+                    par_count -= 1
+
+                degree += char
+
+                if char == RIGHT_PAR and par_count == 0:
+                    index = expression.index(char)
+                    start = char
+                    break
+
+            par_count = 0
+            if start == RIGHT_PAR:
+                index_end = index + 1
+                for char in expression[index + 1:]:
+                    if char == LEFT_PAR:
+                        par_count += 1
+                    if char == RIGHT_PAR:
+                        par_count -= 1
+
+                    base += char
+                    index_end += 1
+
+                    if char == RIGHT_PAR and par_count == 0:
+                        break
+
+            if degree != "()" and base != "()":
+                degree_res = self.parse(degree)
+                base_res = self.parse(base)
+
+                if base_res != "Couldn't parse expression" and degree_res != "Couldn't parse expression":
+                    if degree_res.isnumeric():
+                        result = self.adv.logarithm(float(base_res), int(degree_res))
+
+        return str(result), index_end
+
+    """
+    Method for evaluating factorial
+    @param exspression Expression to evaluate
+    @return Result of the evaluating
+    """
+    def parse_factorial(self, expression):
+        expression_evaluate = ""
+        for char in expression:
+            expression_evaluate += char
+
+        parse_result = self.parse(expression_evaluate)
+        if parse_result.isnumeric():
+            if int(parse_result) > 0:
+                result = self.adv.factorial(int(parse_result))
+        else:
+            result = "Couldn't parse expression"
+
+        return str(result)
+
+    """
+    Method for evaluating trigonometric functions
+    @param func Trigonometric function
+    @param exspression Expression to evaluate
+    @return Result of the evaluating
+    """
+    def parse_trigonometry(self, func, expression):
+        expression_evaluate = ""
+        for char in expression:
+            expression_evaluate += char
+
+        parse_result = float(self.parse(expression_evaluate))
+        match func:
+            case "sin":
+                result = self.adv.sinus(parse_result)
+            case "cos":
+                result = self.adv.cosines(parse_result)
+            case "tan":
+                result = self.adv.tang(parse_result)
+            case "ctg":
+                result = self.adv.cotg(parse_result)
+
+        return str(result)
+
+
+    """
+    Method for evaluation of single math expressions using math libraries
+    @param operand1 First operand
+    @param operand2 Second operand
+    @return False if error occurred
+    """
     def evaluate(self, operand1, operand2):
         match self.operator_stack.pop():
             case "-":
@@ -156,13 +341,12 @@ class BasicMathParsing:
                 result = self.basic.mul(operand1, operand2)
             case "÷":
                 result = self.basic.div(operand1, operand2)
+            case "^":
+                if operand2.is_integer():
+                    result = self.adv.power(operand1, operand2)
+                else:
+                    return False
 
         self.operand_stack.push(result)
 
-
-# if __name__ == '__main__':
-    # expression = "-7÷π+6"
-    # inst = BasicMathParsing()
-    # result = inst.parse(expression)
-    # print(result)
 
