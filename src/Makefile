@@ -2,7 +2,7 @@ APP = calculator/app.py
 ZIP = xberez04_xvinog00_xmazur08
 
 ifeq ($(OS), Windows_NT)
-PY = pyx
+PY = py
 else
 PY = python3.10
 endif
