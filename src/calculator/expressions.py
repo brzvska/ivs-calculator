@@ -15,6 +15,8 @@ class BasicMathParsing:
 
     def __init__(self):
         self.operators = {'+': 1, '-': 1, '×': 2, '÷': 2}
+        self.adv = Advanced()
+        self.basic = Basic()
 
     def split_expression(self, expression):
         number = ""
@@ -117,10 +119,7 @@ class BasicMathParsing:
                 while not self.operator_stack.top() == LEFT_PAR:
                     operand2 = float(self.operand_stack.pop())
                     operand1 = float(self.operand_stack.pop())
-                    try:
-                        self.evaluate(operand1, operand2)
-                    except ZeroDivisionError:
-                        return "Division by zero"
+                    self.evaluate(operand1, operand2)
                 if not self.operator_stack.is_empty() and self.operator_stack.top() == LEFT_PAR:
                     self.operator_stack.pop()
             elif token in self.operators:
@@ -135,37 +134,27 @@ class BasicMathParsing:
                     else:
                         operand2 = float(self.operand_stack.pop())
                         operand1 = float(self.operand_stack.pop())
-
-                        try:
-                            self.evaluate(operand1, operand2)
-                        except ZeroDivisionError:
-                            return "Division by zero"
+                        self.evaluate(operand1, operand2)
 
                         self.operator_stack.push(token)
 
         while not self.operator_stack.is_empty():
             operand2 = float(self.operand_stack.pop())
             operand1 = float(self.operand_stack.pop())
-            try:
-                self.evaluate(operand1, operand2)
-            except ZeroDivisionError:
-                return "Division by zero"
+            self.evaluate(operand1, operand2)
 
         return str(self.operand_stack.top())
 
     def evaluate(self, operand1, operand2):
         match self.operator_stack.pop():
             case "-":
-                result = operand1 - operand2
+                result = self.basic.sub(operand1, operand2)
             case "+":
-                result = operand1 + operand2
+                result = self.basic.add(operand1, operand2)
             case "×":
-                result = operand1 * operand2
+                result = self.basic.mul(operand1, operand2)
             case "÷":
-                if operand2 == "0":
-                    return "Error"
-                else:
-                    result = operand1 / operand2
+                result = self.basic.div(operand1, operand2)
 
         self.operand_stack.push(result)
 
