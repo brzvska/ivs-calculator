@@ -5,20 +5,18 @@ import re
 
 LEFT_PAR = "("
 RIGHT_PAR = ")"
-PLUS = "+"
-MINUS = "-"
-MUL = "*"
-DIV = "/"
+
 
 class BasicMathParsing:
     tokens = []
+    operator_stack = Stack()
+    operand_stack = Stack()
 
     def __init__(self):
         self.operators = {'+': 1, '-': 1, '×': 2, '÷': 2}
 
     def split_expression(self, expression):
         number = ""
-
         for char in expression:
             if char.isnumeric() or char == ".":
                 number += char
@@ -27,8 +25,10 @@ class BasicMathParsing:
                     self.tokens.append(number)
                     number = ""
                 self.tokens.append(char)
-            # else:
-            #     return False
+            elif char == "e":
+                self.tokens.append("2.7183")
+            elif char == "π":
+                self.tokens.append("3.1416")
 
         if number != "":
             self.tokens.append(number)
@@ -37,9 +37,9 @@ class BasicMathParsing:
         # Pars checking
         pars = []
         for token in self.tokens:
-            if token == '(':
+            if token == LEFT_PAR:
                 pars.append(token)
-            elif token == ')':
+            elif token == RIGHT_PAR:
                 if not pars:
                     return False
                 pars.pop()
@@ -54,7 +54,7 @@ class BasicMathParsing:
             elif token in self.operators:
                 if prev_token in self.operators:
                     return False
-                elif prev_token == LEFT_PAR and token != MINUS:
+                elif prev_token == LEFT_PAR and token != "-":
                     return False
                 prev_token = token
             elif token == LEFT_PAR:
@@ -65,7 +65,7 @@ class BasicMathParsing:
             else:
                 prev_token = token
 
-        if self.tokens[-1] in self.operators or self.tokens[-1] == '(':
+        if self.tokens[-1] in self.operators or self.tokens[-1] == LEFT_PAR:
             return False
 
         # Checking the number format
@@ -74,10 +74,9 @@ class BasicMathParsing:
             if prev_token is None:
                 prev_token = token
                 index = self.tokens.index(prev_token)
-                if prev_token == MINUS and self.tokens[index + 1][0].isnumeric():
+                if prev_token == "-" and self.tokens[index + 1][0].isnumeric():
                     self.tokens[index] += self.tokens[index + 1]
                     del self.tokens[index + 1]
-                    prev_token = self.tokens[index]
             elif token not in self.operators and token != RIGHT_PAR and token != LEFT_PAR:
                 if token[0] == ".":
                     return False
@@ -90,14 +89,14 @@ class BasicMathParsing:
                         return False
                     else:
                         prev_token = token
-                if token[0] == "0" and token[1] != ".":
-                    return False
-                if prev_token == MINUS:
+                if len(token) >= 2:
+                    if token[0] == "0" and token[1] != ".":
+                        return False
+                if prev_token == "-":
                     index = self.tokens.index(prev_token)
                     if self.tokens[index - 1] == LEFT_PAR:
                         self.tokens[index] += self.tokens[index + 1]
                         del self.tokens[index + 1]
-                        prev_token = self.tokens[index]
 
             prev_token = token
 
@@ -105,100 +104,74 @@ class BasicMathParsing:
 
     def parse(self, expression):
         self.split_expression(expression)
-
+        print(self.tokens)
         if self.check_semantics() is False:
-            print("Wrong semantics")
-            return "error"
-        operator_stack = Stack()
-        operand_stack = Stack()
-        # ['9', '*', '9', '+', '8']
+            return "Couldn't parse expression."
         for token in self.tokens:
             if token not in self.operators and token != LEFT_PAR and token != RIGHT_PAR:
-                operand_stack.push(token)
+                self.operand_stack.push(token)
             elif token == LEFT_PAR:
-                operator_stack.push(token)
+                self.operator_stack.push(token)
             elif token == RIGHT_PAR:
-                if operator_stack.top() == LEFT_PAR:
-                    operator_stack.pop()
-                while not operator_stack.top() == LEFT_PAR:
-                    operand2 = float(operand_stack.pop())
-                    operand1 = float(operand_stack.pop())
-                    # basic = Basic()
-                    match operator_stack.pop():
-                        case "-":
-                            result = operand1 - operand2
-                            operand_stack.push(result)
-                        case "+":
-                            result = operand1 + operand2
-                            operand_stack.push(result)
-                        case "×":
-                            result = operand1 * operand2
-                            operand_stack.push(result)
-                        case "÷":
-                            if operand2 == "0":
-                                return "false"
-                            result = operand1 / operand2
-                            operand_stack.push(result)
-                if not operator_stack.is_empty() and operator_stack.top() == LEFT_PAR:
-                    operator_stack.pop()
+                while not self.operator_stack.top() == LEFT_PAR:
+                    operand2 = float(self.operand_stack.pop())
+                    operand1 = float(self.operand_stack.pop())
+                    try:
+                        self.evaluate(operand1, operand2)
+                    except ZeroDivisionError:
+                        return "Division by zero"
+                if not self.operator_stack.is_empty() and self.operator_stack.top() == LEFT_PAR:
+                    self.operator_stack.pop()
             elif token in self.operators:
-                if operator_stack.is_empty():
-                    operator_stack.push(token)
+                if self.operator_stack.is_empty():
+                    self.operator_stack.push(token)
                 else:
-                    top = operator_stack.top()
+                    top = self.operator_stack.top()
                     if top == LEFT_PAR:
-                        operator_stack.push(token)
+                        self.operator_stack.push(token)
                     elif self.operators[token] > self.operators[top]:
-                        operator_stack.push(token)
+                        self.operator_stack.push(token)
                     else:
-                        operand2 = float(operand_stack.pop())
-                        operand1 = float(operand_stack.pop())
-                        # basic = Basic()
-                        match operator_stack.pop():
-                            case "-":
-                                result = operand1 - operand2
-                                operand_stack.push(result)
-                            case "+":
-                                result = operand1 + operand2
-                                operand_stack.push(result)
-                            case "×":
-                                result = operand1 * operand2
-                                operand_stack.push(result)
-                            case "÷":
-                                if operand2 == "0":
-                                    return "false"
-                                result = operand1 / operand2
-                                operand_stack.push(result)
+                        operand2 = float(self.operand_stack.pop())
+                        operand1 = float(self.operand_stack.pop())
 
-                        operator_stack.push(token)
+                        try:
+                            self.evaluate(operand1, operand2)
+                        except ZeroDivisionError:
+                            return "Division by zero"
 
-        while not operator_stack.is_empty():
-            operand2 = float(operand_stack.pop())
-            operand1 = float(operand_stack.pop())
-            # basic = Basic()
-            match operator_stack.pop():
-                case "-":
-                    result = operand1 - operand2
-                    operand_stack.push(result)
-                case "+":
-                    result = operand1 + operand2
-                    operand_stack.push(result)
-                case "×":
-                    result = operand1 * operand2
-                    operand_stack.push(result)
-                case "÷":
-                    if operand2 == "0":
-                        return "false"
+                        self.operator_stack.push(token)
+
+        while not self.operator_stack.is_empty():
+            operand2 = float(self.operand_stack.pop())
+            operand1 = float(self.operand_stack.pop())
+            try:
+                self.evaluate(operand1, operand2)
+            except ZeroDivisionError:
+                return "Division by zero"
+
+        return str(self.operand_stack.top())
+
+    def evaluate(self, operand1, operand2):
+        match self.operator_stack.pop():
+            case "-":
+                result = operand1 - operand2
+            case "+":
+                result = operand1 + operand2
+            case "×":
+                result = operand1 * operand2
+            case "÷":
+                if operand2 == "0":
+                    return "Error"
+                else:
                     result = operand1 / operand2
-                    operand_stack.push(result)
 
-        return str(operand_stack.top())
+        self.operand_stack.push(result)
 
 
 if __name__ == '__main__':
-    expression = "-5+(3×2+4×3)÷3"
+    expression = "-7÷π+6"
     inst = BasicMathParsing()
     result = inst.parse(expression)
     print(result)
-    print("RABOTAET!!!")
 
