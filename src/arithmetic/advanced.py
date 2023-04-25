@@ -29,7 +29,7 @@ class Advanced(Basic):
     @staticmethod
     def factorial(x: int) -> int:
         try:
-            if x < 0:
+            if x < 0 or isinstance(x, float):
                 raise BadOperandException
 
             result = 1
