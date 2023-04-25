@@ -13,19 +13,22 @@ endif
 test: test-basic test-advanced
 
 test-basic:
-	    $(PY) -m unittest -v test-basic.py
+		$(PY) -m unittest -v test-basic.py
 
 test-advanced:
-	    $(PY) -m unittest -v test-advanced.py
+		$(PY) -m unittest -v test-advanced.py
 
-run:
-	    $(PY) $(APP)
+run: build
+		$(PY) $(APP)
 
 setup: requirements.txt
-	    pip install -r $<
+		pip install -r $<
+
+build: setup
+		pyinstaller --onefile calculator/app.py
 
 profile: profiling.py
-	    $(PY) -m profile -o ../profiling/output10_1 $< < ../profiling/10_1
+		$(PY) -m profile -o ../profiling/output10_1 $< < ../profiling/10_1
 
 clean:
-		rm -rf calculator/build calculator/dist
+		rm -rf ../src/calculator/build ../src/calculator/dist
