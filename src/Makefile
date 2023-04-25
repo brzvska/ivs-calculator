@@ -1,6 +1,12 @@
-PY = py
 APP = calculator/app.py
 ZIP = xberez04_xvinog00_xmazur08
+
+ifeq ($(UNAME), Linux)
+PY = python3.10
+else
+PY = py
+endif
+
 
 .PHONY: all pack clean test doc run profile setup test-basic test-advanced
 
