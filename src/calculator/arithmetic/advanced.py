@@ -41,7 +41,7 @@ class Advanced(Basic):
     # @param base Base number
     # @param number Antilogarithm number
     # @return Logarithm value of given number with specific base
-    def logarithm(self, number: int, base: int) -> float:
+    def logarithm(self, number: float, base: int) -> float:
         try:
             if base == 1 or base <= 0 or number <= 0:
                 raise BadOperandException
@@ -53,7 +53,7 @@ class Advanced(Basic):
     # Method for n-th root computations
     # @param self Object pointer
     # @param degree Root degree
-    # @param radicant The number from which the root has to be extracted
+    # @param radicand The number from which the root has to be extracted
     def rootn(self, degree: int, radicand: float):
         try:
             if degree % 2 == 0 and radicand < 0:
