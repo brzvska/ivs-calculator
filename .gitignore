@@ -1,10 +1,7 @@
 .idea/
-src/.idea
 design.ui
 output.py
-src/__pychache__
-src/calculator/__pychache__
-src/calculator/arithmetic/__pychache__
+__pycache__/
 src/calculator/build
 src/calculator/dist
 venv/
