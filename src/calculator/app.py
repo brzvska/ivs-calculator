@@ -3,6 +3,7 @@
 
 import sys
 from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -50,6 +51,9 @@ class Window(QMainWindow):
         self.label.setAlignment(Qt.AlignRight)
         self.label.setFont(QFont('Cascadia Mono', 25))
         self.label.setStyleSheet("letter-spacing: 2px; color: #72727E;")
+
+        # boolean flag for switching help window
+        self.flag = True
 
         # filling with buttons
         self.ui_components()
@@ -193,6 +197,9 @@ class Window(QMainWindow):
         clear_button = FunctionButton("C", self)
         clear_button.setGeometry(10, 126, 53, 53)
 
+        help_button = FunctionButton("?", self)
+        help_button.setGeometry(388, 126, 53, 53)
+
         # mouse manipulating with buttons:
         mul_button.clicked.connect(lambda: self.action_button("mul"))
         division_button.clicked.connect(lambda: self.action_button("div"))
@@ -224,6 +231,7 @@ class Window(QMainWindow):
         factorial_button.clicked.connect(self.action_factorial)
         logarithm_button.clicked.connect(self.action_logarithm)
         a_button.clicked.connect(self.action_a)
+        help_button.clicked.connect(self.action_help)
 
 # ---------------------------------------   BUTTON ACTIONS  ------------------------------------------------------------
     # Generate text on input field
@@ -311,8 +319,72 @@ class Window(QMainWindow):
     def action_clear(self):
         self.label.clear()
 
+    def action_help(self):
+        if self.flag:
+            self.flag = False
+            self.window = QMainWindow()
+            self.second_window = HelpWindow()
+            self.second_window.set_ui()
+            self.second_window.show()
+        else:
+            self.flag = True
+            self.second_window.close()
+
 
 # ---------------------------------------   END BUTTON ACTIONS   -------------------------------------------------------
+
+# ---------------------------------------   WINDOW WITH HELP INFO      -------------------------------------------------
+class HelpWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+    def set_ui(self):
+        self.setWindowTitle("Help Information")
+        self.setFixedSize(QSize(543, 340))
+        self.setGeometry(600, 130, 600, 400)
+
+        # label "how to use calculator"
+        self.first_label = QLabel(self)
+        self.first_label.setGeometry(0, 0, 543, 40)
+        self.first_label.setAlignment(Qt.AlignCenter)
+        self.first_label.setFont(QFont('Cascadia Mono', 11))
+        self.first_label.setStyleSheet("letter-spacing: 2px; color: #fff; background-color: #797A9E")
+        self.first_label.setText("Usage:")
+
+        # label on the left side
+        self.second_label = QLabel(self)
+        self.second_label.setGeometry(0, 40, 135, 270)
+        self.second_label.setAlignment(Qt.AlignCenter)
+        self.second_label.setFont(QFont('Cascadia Mono', 10))
+        self.second_label.setStyleSheet("letter-spacing: 2px; color: #000; background-color: #fff; "
+                                        "border-right: 1px solid #72727E")
+        self.second_label.setText("sin/cos/\ntan/cos\n\nln(n)\n\na^n\n\n!\n\ne\n\nπ\n\n√")
+
+        # label on the right side
+        self.third_label = QLabel(self)
+        self.third_label.setGeometry(135, 40, 478, 270)
+        self.third_label.setAlignment(Qt.AlignLeft)
+        self.third_label.setFont(QFont('Cascadia Mono', 10))
+        self.third_label.setStyleSheet("letter-spacing: 1px; color: #000; background-color: #fff")
+        self.third_label.setText("\n\n    enter argument -> click on sin/cos/tan/ctg\n\n\n"
+                                 "    enter argument -> click on ln \n\n"
+                                 "    enter number -> click on a^n -> enter power\n\n"
+                                 "    enter number -> click on !\n\n"
+                                 "    click on e\n\n"
+                                 "    click on π\n\n"
+                                 "    enter exponent -> click on √ -> enter number\n\n")
+
+
+        # label on the bottom
+        self.fourth_label = QLabel(self)
+        self.fourth_label.setGeometry(0, 310, 543, 30)
+        self.fourth_label.setAlignment(Qt.AlignCenter)
+        self.fourth_label.setFont(QFont('Cascadia Mono', 9))
+        self.fourth_label.setStyleSheet("letter-spacing: 1px; color: #585973; font-weight: bold; background-color: #fff; "
+                                       "border-top: 1px solid #72727E")
+        self.fourth_label.setText("  The result of the expression will be shown after clicking on '='  ")
+
+# ---------------------------------------   END WINDOW   ---------------------------------------------------------------
 
 # ---------------------------------------   BUTTON SUBCLASSES   --------------------------------------------------------
 class Button(QPushButton):
