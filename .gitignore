@@ -5,3 +5,4 @@ __pycache__/
 src/calculator/build
 src/calculator/dist
 venv/
+.DS_Store/
