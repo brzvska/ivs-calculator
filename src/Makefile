@@ -28,4 +28,4 @@ profile: profiling.py
 	    $(PY) -m profile -o ../profiling/output10_1 $< < ../profiling/10_1
 
 clean:
-        rm -rf calculator/build calculator/dist
+		rm -rf calculator/build calculator/dist
