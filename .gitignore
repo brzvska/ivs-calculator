@@ -5,4 +5,6 @@ output.py
 src/__pychache__
 src/calculator/__pychache__
 src/calculator/arithmetic/__pychache__
-profiling/test.txt
+src/calculator/build
+src/calculator/dist
+venv/
