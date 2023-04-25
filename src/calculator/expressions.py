@@ -9,14 +9,13 @@ RIGHT_PAR = ")"
 
 
 class BasicMathParsing:
-    operator_stack = Stack()
-    operand_stack = Stack()
-
     def __init__(self):
         self.operators = {'+': 1, '-': 1, '×': 2, '÷': 2}
         self.adv = Advanced()
         self.basic = Basic()
         self.tokens = []
+        self.operator_stack = Stack()
+        self.operand_stack = Stack()
 
     def split_expression(self, expression):
         number = ""
