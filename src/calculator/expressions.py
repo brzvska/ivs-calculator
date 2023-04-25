@@ -106,7 +106,7 @@ class BasicMathParsing:
 
     def parse(self, expression):
         self.split_expression(expression)
-        print(self.tokens)
+        # print(self.tokens)
         if self.check_semantics() is False:
             return "Couldn't parse expression."
         for token in self.tokens:
@@ -160,9 +160,9 @@ class BasicMathParsing:
         self.operand_stack.push(result)
 
 
-if __name__ == '__main__':
-    expression = "-7÷π+6"
-    inst = BasicMathParsing()
-    result = inst.parse(expression)
-    print(result)
+# if __name__ == '__main__':
+    # expression = "-7÷π+6"
+    # inst = BasicMathParsing()
+    # result = inst.parse(expression)
+    # print(result)
 
