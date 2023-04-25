@@ -1,6 +1,6 @@
 import unittest
 from unittest_prettify.colorize import *
-from calculator.arithmetic.basic import Basic
+from calculator.calclib.basic import Basic
 
 @colorize(color=RED)
 class AddTests(unittest.TestCase):

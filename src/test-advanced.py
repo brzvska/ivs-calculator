@@ -1,7 +1,7 @@
 import unittest
 from unittest_prettify.colorize import *
-from calculator.arithmetic.advanced import Advanced
-from calculator.arithmetic.exceptions import BadOperandException
+from calculator.calclib.advanced import Advanced
+from calculator.calclib.exceptions import BadOperandException
 
 
 @colorize(color=RED)

@@ -2,17 +2,13 @@
 
 
 import sys
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout
+from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from PyQt5 import QtQuick
-from PyQt5 import QtCore
 from PyQt5.Qt import Qt
 
-from expressions import MathParsing as MP
-
+from calclib.expressions import MathParsing as MP
 
 
 class Window(QMainWindow):

@@ -1,5 +1,6 @@
 import unittest
-from src.calculator.expressions import MathParsing
+from calculator.calclib.expressions import MathParsing
+
 
 class AdditionTests(unittest.TestCase):
     print('Testing addition')
