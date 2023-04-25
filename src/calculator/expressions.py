@@ -9,7 +9,6 @@ RIGHT_PAR = ")"
 
 
 class BasicMathParsing:
-    tokens = []
     operator_stack = Stack()
     operand_stack = Stack()
 
@@ -17,6 +16,7 @@ class BasicMathParsing:
         self.operators = {'+': 1, '-': 1, '×': 2, '÷': 2}
         self.adv = Advanced()
         self.basic = Basic()
+        self.tokens = []
 
     def split_expression(self, expression):
         number = ""
@@ -142,6 +142,8 @@ class BasicMathParsing:
             operand2 = float(self.operand_stack.pop())
             operand1 = float(self.operand_stack.pop())
             self.evaluate(operand1, operand2)
+
+        self.tokens = []
 
         return str(self.operand_stack.top())
 

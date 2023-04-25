@@ -10,7 +10,7 @@ from PyQt5 import QtQuick
 from PyQt5 import QtCore
 from PyQt5.Qt import Qt
 
-from arithmetic.basic import Basic as math
+from expressions import BasicMathParsing as BMP
 
 
 class Window(QMainWindow):
@@ -298,7 +298,7 @@ class Window(QMainWindow):
 
     def action_equal(self):
         text = self.label.text()
-        result = math.BasicMath.equal(self, text)
+        result = BMP().parse(text)
         self.label.clear()
         self.label.setText(str(result))
 
