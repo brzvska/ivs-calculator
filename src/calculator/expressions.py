@@ -1,7 +1,8 @@
 from stack import Stack
 import re
-# from src.arithmetic.basic import Basic
 
+from arithmetic.basic import Basic
+from arithmetic.advanced import Advanced
 
 LEFT_PAR = "("
 RIGHT_PAR = ")"
