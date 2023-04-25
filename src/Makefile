@@ -18,5 +18,5 @@ run:
 setup: requirements.txt
 	pip install -r $<
 
-profile:
-	$(PY) -m cProfile profiling.py < test.txt
+profile: profiling.py
+	$(PY) -m profile -o ../profiling/output10_1 $< < ../profiling/10_1.txt

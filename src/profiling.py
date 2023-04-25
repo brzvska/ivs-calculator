@@ -1,5 +1,6 @@
 from calculator.arithmetic.basic import Basic
 from calculator.arithmetic.advanced import Advanced
+import re
 
 math = Advanced()
 
