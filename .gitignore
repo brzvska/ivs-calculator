@@ -1,0 +1,8 @@
+.idea/
+src/.idea
+design.ui
+output.py
+src/__pychache__
+src/calculator/__pychache__
+src/calculator/arithmetic/__pychache__
+profiling/test.txt
