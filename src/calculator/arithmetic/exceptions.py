@@ -1,0 +1,2 @@
+class BadOperandException(Exception):
+    pass
