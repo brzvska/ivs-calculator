@@ -111,7 +111,6 @@ class MathParsing:
                     else:
                         prev_token = token
                 if len(token) >= 2:
-                    print("here")
                     if token[0] == "0" and token[1] != ".":
                         return False
                 if prev_token == "-":
