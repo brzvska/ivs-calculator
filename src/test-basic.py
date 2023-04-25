@@ -60,7 +60,7 @@ class AddTests(unittest.TestCase):
         """Two long floats"""
         x = 125.435735
         y = 87.32612747
-        self.assertEqual(212.76186247, self.op.add(x, y))
+        self.assertEqual(212.7618625, self.op.add(x, y))
 
 
 @colorize(color=GREEN)
@@ -121,7 +121,7 @@ class SubTests(unittest.TestCase):
         """Two long floats"""
         x = 3252.12612686
         y = 2637.865946
-        self.assertEqual(614.26018086, self.op.sub(x, y))
+        self.assertEqual(614.2601809, self.op.sub(x, y))
 
 
 @colorize(color=YELLOW)
@@ -182,7 +182,7 @@ class MulTests(unittest.TestCase):
         """Two long floats"""
         x = 12612.174389
         y = 236.539653463
-        self.assertEqual(2983279.359388983759107, self.op.mul(x, y))
+        self.assertEqual(2983279.3593890, self.op.mul(x, y))
 
 
 @colorize(color=BLUE)
@@ -237,13 +237,14 @@ class DivTests(unittest.TestCase):
         """Two very large numbers"""
         x = 1261281
         y = 63948
-        self.assertEqual(19.7235410021, self.op.div(x, y))
+        self.assertEqual(19.7235410, self.op.div(x, y))
 
     def test_long_float(self):
         """Two long floats"""
         x = 12612.174389
         y = 236.539653463
-        self.assertEqual(53.319492966, self.op.div(x, y))
+        self.assertEqual(53.3194930, self.op.div(x, y))
+
 
 if __name__ == '__main__':
     unittest.main()

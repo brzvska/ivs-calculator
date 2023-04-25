@@ -20,33 +20,39 @@ class Basic:
     # @param x First operand
     # @param y Second operand
     # @return Sum of two numbers
-    @staticmethod
-    def add(x: float, y: float) -> float:
-        return x + y
+    def add(self, x: float, y: float):
+        return self.int_translate(x + y)
 
     # Static method for - operation
     # @param minuend First operand
     # @param subtrahend Second operand
     # @return Difference between two numbers
-    @staticmethod
-    def sub(minuend: float, subtrahend: float) -> float:
-        return minuend - subtrahend
+    def sub(self, minuend: float, subtrahend: float):
+        return self.int_translate(minuend - subtrahend)
 
     # Static method for * operation
     # @param multiplier First operand
     # @param multiplicand Second operand
     # @return Product of two numbers
-    @staticmethod
-    def mul(multiplier: float, multiplicant: float) -> float:
-        return multiplier * multiplicant
+    def mul(self, multiplier: float, multiplicant: float):
+        return self.int_translate(multiplier * multiplicant)
 
     # Static method for / operation
     # @param dividend The number to be divided
     # @param divisor The number to divide by
     # @return Division operation result
-    @staticmethod
-    def div(divident: float, divisor: float) -> float:
+    def div(self, divident: float, divisor: float) -> float:
         try:
-            return divident / divisor
+            return self.int_translate(divident / divisor)
         except ZeroDivisionError:
             print("Error! Denominator can not be 0")
+
+    @staticmethod
+    def int_translate(num):
+        if isinstance(num, complex):
+            num = num.real
+        if float(num).is_integer():
+            return int(num)
+        else:
+            return round(num, 7)
+

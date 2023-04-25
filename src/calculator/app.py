@@ -15,8 +15,13 @@ from PyQt5 import QtQuick
 from PyQt5 import QtCore
 from PyQt5.Qt import Qt
 
+<<<<<<< HEAD
 from expressions import BasicMathParsing as BMP
 from expressions import AdvancedMathParsing as AMP
+=======
+from expressions import MathParsing as MP
+
+>>>>>>> main
 
 """@brief Class - main window of calculator"""
 class Window(QMainWindow):
@@ -165,7 +170,7 @@ class Window(QMainWindow):
         factorial_button = MathOperationButton("!", self)
         factorial_button.setGeometry(10, 354, 53, 53)
 
-        logarithm_button = MathOperationButton("ln", self)
+        logarithm_button = MathOperationButton("log", self)
         logarithm_button.setGeometry(10, 240, 53, 53)
 
         square_button = MathOperationButton("√", self)
@@ -287,10 +292,11 @@ class Window(QMainWindow):
     def action_square(self):
         exp = self.label.text()
         self.label.clear()
-        self.label.setText("sqrt({})".format(exp))
+        self.label.setText("sqrt({})(".format(exp))
 
     def action_factorial(self):
         number = self.label.text()
+<<<<<<< HEAD
         result = AMP()
         text = self.label.text()
         self.label.setText(str(text) + "!")
@@ -306,6 +312,15 @@ class Window(QMainWindow):
         result = AMP().parse(number)
         self.label.setText(str(result))
 
+=======
+        result = MP().parse_factorial(number)
+        self.label.setText(str(result))
+
+    def action_logarithm(self):
+        number = self.label.text()
+        self.label.clear()
+        self.label.setText('log({})('.format(number))
+>>>>>>> main
 
     def action_a(self):
         number = self.label.text()
@@ -320,12 +335,16 @@ class Window(QMainWindow):
             "tan": "tan",
             "ctg": "ctg",
         }
+<<<<<<< HEAD
         result = AMP().parse(number)
+=======
+        result = MP().parse_trigonometry(str(switcher.get(param)), number)
+>>>>>>> main
         self.label.setText(str(result))
 
     def action_equal(self):
         text = self.label.text()
-        result = BMP().parse(text)
+        result = MP().parse(text)
         self.label.clear()
         self.label.setText(str(result))
 

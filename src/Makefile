@@ -1,6 +1,12 @@
-PY = py
-APP = app.py
+APP = calculator/app.py
 ZIP = xberez04_xvinog00_xmazur08
+
+ifeq ($(OS), Windows_NT)
+PY = py
+else
+PY = python3.10
+endif
+
 
 .PHONY: all pack clean test doc run profile setup test-basic test-advanced
 
@@ -13,8 +19,10 @@ test-advanced:
 	$(PY) -m unittest -v test-advanced.py
 
 run:
-	$(PY) calculator/$(APP)
+	$(PY) $(APP)
 
 setup: requirements.txt
 	pip install -r $<
 
+profile: profiling.py
+	$(PY) -m profile -o ../profiling/output10_1 $< < ../profiling/10_1
