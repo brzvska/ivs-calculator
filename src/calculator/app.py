@@ -1,9 +1,5 @@
-"""@brief Main file of the project for IVS university subject - calculator"""
-"""
-    Authors:    Alina Vinogradova
-                Anastasiia Berezovska
-                Maryia Mazurava    
-"""
+# Authors: Alina Vinogradova, Anastasiia Berezovska, Maryia Mazurava
+
 
 import sys
 from PyQt5 import QtWidgets
@@ -15,20 +11,15 @@ from PyQt5 import QtQuick
 from PyQt5 import QtCore
 from PyQt5.Qt import Qt
 
-<<<<<<< HEAD
-from expressions import BasicMathParsing as BMP
-from expressions import AdvancedMathParsing as AMP
-=======
 from expressions import MathParsing as MP
 
->>>>>>> main
 
-"""@brief Class - main window of calculator"""
+
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        """Purple line on the top"""
+        # purple line
         self.line = QLineEdit(self)
         self.line.setReadOnly(True)
         self.line.move(0, 0)
@@ -36,7 +27,7 @@ class Window(QMainWindow):
         self.line.setStyleSheet("QLineEdit {background-color: #9893DA; border-style: none; "
                                 "color: #72727E; font: 22px;}")
 
-        """Background frame"""
+        # background frame
         self.back = QLineEdit(self)
         self.back.setReadOnly(True)
         self.back.move(0, 120)
@@ -44,14 +35,14 @@ class Window(QMainWindow):
         self.back.setStyleSheet("QLineEdit {background-color: #D9D9D9;" "border-style: none;"
                                 "border-top-left-radius: 20px; border-top-right-radius: 20px;}")
 
-        """Input field"""
+        # input field
         self.textbox = QLineEdit(self)
         self.textbox.setReadOnly(True)
         self.textbox.move(12, 40)
         self.textbox.resize(428, 68)
         self.textbox.setStyleSheet("QLineEdit { background-color: #D9D9D9; border-style: none; border-radius: 20px; }")
 
-        """Setting window parameters"""
+        # setting window parameters
         self.setWindowTitle("Calculator")
         self.setFixedSize(QSize(453, 420))
         self.setGeometry(100, 100, 600, 400)
@@ -62,14 +53,14 @@ class Window(QMainWindow):
         self.label.setFont(QFont('Cascadia Mono', 25))
         self.label.setStyleSheet("letter-spacing: 2px; color: #72727E;")
 
-        """Boolean flag for switching help window"""
+        # boolean flag for switching help window
         self.flag = True
 
-        """Filling with buttons"""
+        # filling with buttons
         self.ui_components()
         self.show()
 
-    """Keyboard manipulating"""
+    # Keyboard manipulating
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_1:
             self.action_button(1)
@@ -114,7 +105,7 @@ class Window(QMainWindow):
 
     def ui_components(self):
 
-        """Digit buttons"""
+        # digit buttons:
         nine_button = DigitButton("9", self)
         nine_button.setGeometry(262, 183, 53, 53)
 
@@ -145,7 +136,7 @@ class Window(QMainWindow):
         null_button = DigitButton("0", self)
         null_button.setGeometry(199, 354, 53, 53)
 
-        """Math operation buttons"""
+        # Math operation buttons
         equal_button = MathOperationButton("=", self)
         equal_button.setGeometry(262, 354, 53, 53)
 
@@ -200,7 +191,7 @@ class Window(QMainWindow):
         ctg_button = MathOperationButton("ctg", self)
         ctg_button.setGeometry(388, 354, 53, 53)
 
-        """Functional buttons"""
+        # functional buttons:
         delete_button = FunctionButton("←", self)
         delete_button.setGeometry(73, 126, 53, 53)
 
@@ -210,7 +201,7 @@ class Window(QMainWindow):
         help_button = FunctionButton("?", self)
         help_button.setGeometry(388, 126, 53, 53)
 
-        """Mouse manipulating with buttons"""
+        # mouse manipulating with buttons:
         mul_button.clicked.connect(lambda: self.action_button("mul"))
         division_button.clicked.connect(lambda: self.action_button("div"))
         plus_button.clicked.connect(lambda: self.action_button("plus"))
@@ -243,9 +234,8 @@ class Window(QMainWindow):
         a_button.clicked.connect(self.action_a)
         help_button.clicked.connect(self.action_help)
 
-    """ -------------------------------------   BUTTON ACTIONS  -------------------------------------------------------- """
-    """Generates text into input field"""
-    """@param param - name of the clicked button"""
+# ---------------------------------------   BUTTON ACTIONS  ------------------------------------------------------------
+    # Generate text on input field
     def action_button(self, param):
         switcher = {
             0: "0",
@@ -271,8 +261,7 @@ class Window(QMainWindow):
         text = self.label.text()
         self.label.setText(text + str(switcher.get(param)))
 
-    """Generates text on input field"""
-    """@param param - name of the clicked button"""
+    # Generate text on input field
     def action_nums(self, param):
         switcher = {
             0: "0",
@@ -290,29 +279,12 @@ class Window(QMainWindow):
         self.label.setText(text + str(switcher.get(param)))
 
     def action_square(self):
-        exp = self.label.text()
+        exp = self.label.text()  # exponent
         self.label.clear()
         self.label.setText("sqrt({})(".format(exp))
 
     def action_factorial(self):
         number = self.label.text()
-<<<<<<< HEAD
-        result = AMP()
-        text = self.label.text()
-        self.label.setText(str(text) + "!")
-
-    def action_logarithm(self):
-        number = self.label.text()
-        switcher = {
-            "sin": "sin",
-            "cos": "cos",
-            "tan": "tan",
-            "ctg": "ctg",
-        }
-        result = AMP().parse(number)
-        self.label.setText(str(result))
-
-=======
         result = MP().parse_factorial(number)
         self.label.setText(str(result))
 
@@ -320,13 +292,11 @@ class Window(QMainWindow):
         number = self.label.text()
         self.label.clear()
         self.label.setText('log({})('.format(number))
->>>>>>> main
 
     def action_a(self):
         number = self.label.text()
         self.label.setText(number + '^')
 
-    """@param param - name of the clicked button"""
     def action_trigonometry(self, param):
         number = self.label.text()
         switcher = {
@@ -335,11 +305,7 @@ class Window(QMainWindow):
             "tan": "tan",
             "ctg": "ctg",
         }
-<<<<<<< HEAD
-        result = AMP().parse(number)
-=======
         result = MP().parse_trigonometry(str(switcher.get(param)), number)
->>>>>>> main
         self.label.setText(str(result))
 
     def action_equal(self):
@@ -348,12 +314,12 @@ class Window(QMainWindow):
         self.label.clear()
         self.label.setText(str(result))
 
-    """Removes a single symbol"""
+    # Remove a single symbol
     def action_del(self):
         text = self.label.text()
         self.label.setText(text[:len(text) - 1])
 
-    """Removes all text from input field"""
+    # Removes all text from input field
     def action_clear(self):
         self.label.clear()
 
@@ -369,9 +335,9 @@ class Window(QMainWindow):
             self.second_window.close()
 
 
-""" -------------------------------------   END BUTTON ACTIONS   --------------------------------------------------- """
+# ---------------------------------------   END BUTTON ACTIONS   -------------------------------------------------------
 
-""" -------------------------------------   WINDOW WITH HELP INFO      --------------------------------------------- """
+# ---------------------------------------   WINDOW WITH HELP INFO      -------------------------------------------------
 class HelpWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -381,7 +347,7 @@ class HelpWindow(QMainWindow):
         self.setFixedSize(QSize(543, 340))
         self.setGeometry(600, 130, 600, 400)
 
-        """label on the top"""
+        # label "how to use calculator"
         self.first_label = QLabel(self)
         self.first_label.setGeometry(0, 0, 543, 40)
         self.first_label.setAlignment(Qt.AlignCenter)
@@ -389,16 +355,16 @@ class HelpWindow(QMainWindow):
         self.first_label.setStyleSheet("letter-spacing: 2px; color: #fff; background-color: #797A9E")
         self.first_label.setText("Usage:")
 
-        """label on the left side"""
+        # label on the left side
         self.second_label = QLabel(self)
         self.second_label.setGeometry(0, 40, 135, 270)
         self.second_label.setAlignment(Qt.AlignCenter)
         self.second_label.setFont(QFont('Cascadia Mono', 10))
         self.second_label.setStyleSheet("letter-spacing: 2px; color: #000; background-color: #fff; "
                                         "border-right: 1px solid #72727E")
-        self.second_label.setText("sin/cos/\ntan/cos\n\nln(n)\n\n^\n\n!\n\ne\n\nπ\n\n√")
+        self.second_label.setText("sin/cos/\ntan/cos\n\nln(n)\n\na^n\n\n!\n\ne\n\nπ\n\n√")
 
-        """label on the right side"""
+        # label on the right side
         self.third_label = QLabel(self)
         self.third_label.setGeometry(135, 40, 478, 270)
         self.third_label.setAlignment(Qt.AlignLeft)
@@ -413,7 +379,7 @@ class HelpWindow(QMainWindow):
                                  "    enter exponent -> click on √ -> enter number\n\n")
 
 
-        """label on the bottom"""
+        # label on the bottom
         self.fourth_label = QLabel(self)
         self.fourth_label.setGeometry(0, 310, 543, 30)
         self.fourth_label.setAlignment(Qt.AlignCenter)
@@ -422,9 +388,9 @@ class HelpWindow(QMainWindow):
                                        "border-top: 1px solid #72727E")
         self.fourth_label.setText("  The result of the expression will be shown after clicking on '='  ")
 
-""" -------------------------------------   END WINDOW   ----------------------------------------------------------- """
+# ---------------------------------------   END WINDOW   ---------------------------------------------------------------
 
-""" -------------------------------------   BUTTON SUBCLASES    ---------------------------------------------------- """
+# ---------------------------------------   BUTTON SUBCLASSES   --------------------------------------------------------
 class Button(QPushButton):
     def __init__(self, name, parent=None):
         super().__init__(name, parent)
@@ -436,27 +402,31 @@ class Button(QPushButton):
         shadow.setColor(QColor("#A5A5A5"))
         self.setGraphicsEffect(shadow)
 
-"""Subclass of class Button for digit button"""
+
+# Subclass of class Button for digit button
 class DigitButton(Button):
     def __init__(self, name, parent=None):
         super().__init__(name, parent)
         self.setStyleSheet("border-style: none; border-radius: 26px; background-color: #9893DA; color: #F2F6F5;")
 
-"""Subclass of class Button for math operation button"""
+
+# Subclass of class Button for math operation button
 class MathOperationButton(Button):
     def __init__(self, name, parent=None):
         super().__init__(name, parent)
         self.setStyleSheet("border-style: none; border-radius: 26px; background-color: #72727E; color: #242224;")
 
-"""Subclass of class Button for functional button"""
+
+# Subclass of class Button for functional button
 class FunctionButton(Button):
     def __init__(self, name, parent=None):
         super().__init__(name, parent)
         self.setStyleSheet("border-style: none; border-radius: 26px; background-color: #797A9E; color: #F2F6F5;")
 
-""" ----------------------------------------    END BUTTON SUBCLASSES   -------------------------------------------- """
 
-""" ---------------------------------------     MAIN PROGRAM    ---------------------------------------------------- """
+# ------------------------------------------    END BUTTON SUBCLASSES   ------------------------------------------------
+
+# ------------------------------------------    MAIN PROGRAM    --------------------------------------------------------
 
 App = QApplication(sys.argv)
 window = Window()

@@ -62,7 +62,7 @@ class Advanced(Basic):
         except BadOperandException:
             sys.stderr.write("Error: wrong root expression")
 
-        return self.int_translate(self.power(radicand, self.div(1, degree)))
+        return self.int_translate(self.power(radicand, self.power(degree, -1)))
 
 
     # Static method for sinus function
