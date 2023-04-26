@@ -30,7 +30,7 @@ run: calculator/app.py
 setup: requirements.txt
 		pip install -r $<
 
-build: setup
+build:
 		pyinstaller app.spec
 
 profile: profiling.py
@@ -40,6 +40,7 @@ profile: profiling.py
 		$(PY) -m profile $< < ../profiling/10_3 >> ../profiling/vystup.txt
 		printf "\n## Statistics for input size of 1000000\n\n" >> ../profiling/vystup.txt
 		$(PY) -m profile $< < ../profiling/10_6 >> ../profiling/vystup.txt
+
 clean:
 		$(CLEANUP) $(BUILDDIRS)
 		rm -rf __pycache__/
@@ -59,3 +60,6 @@ pack:
 		rm -rf ../../$(ZIP)/repo/doc ../../$(ZIP)/repo/src/build/ ../../$(ZIP)/repo/src/dist/
 		cd ../.. && zip -r $(ZIP).zip $(ZIP)
 
+doc: Doxyfile
+		rm -rf ../doc/*
+		doxygen
