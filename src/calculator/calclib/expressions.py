@@ -1,4 +1,4 @@
-"""
+"""!
 @package calculator
 @file expressions.py
 @author Maryia Mazurava
@@ -11,13 +11,13 @@ LEFT_PAR = "("
 RIGHT_PAR = ")"
 
 
-"""
+"""!
 Base class "MathParsing"
 @brief Representation of basic math logic
 """
 class MathParsing:
 
-    """ Constructor """
+    """! Constructor """
     def __init__(self):
         self.operators = {'+': 1, '-': 1, '×': 2, '÷': 2, '^': 3}
         self.adv = advanced.Advanced()
@@ -26,7 +26,7 @@ class MathParsing:
         self.operator_stack = stack.Stack()
         self.operand_stack = stack.Stack()
 
-    """
+    """!
     @brief Method for splitting an expression into tokens
     @param expression Expression string
     """
@@ -47,7 +47,7 @@ class MathParsing:
         if number != "":
             self.tokens.append(number)
 
-    """
+    """!
     @brief Method for checking if the expression is correct
     @return True if expression is correct, False instead
     """
@@ -64,7 +64,7 @@ class MathParsing:
         if pars:
             return False
 
-        """ Checking if the operators are used correctly """
+        """! Checking if the operators are used correctly """
         prev_token = None
         for token in self.tokens:
             if prev_token is None:
@@ -86,7 +86,7 @@ class MathParsing:
         if self.tokens[-1] in self.operators or self.tokens[-1] == LEFT_PAR:
             return False
 
-        """ Checking the number format and possible negative numbers """
+        """! Checking the number format and possible negative numbers """
         prev_token = None
         for token in self.tokens:
             if prev_token is None:
@@ -108,7 +108,7 @@ class MathParsing:
         if self.tokens[-1] in self.operators or self.tokens[-1] == LEFT_PAR:
             return False
 
-        """ Checking the number format and possible negative numbers """
+        """! Checking the number format and possible negative numbers """
         prev_token = None
         index = 0
         for token in self.tokens:
@@ -151,7 +151,7 @@ class MathParsing:
 
         return True
 
-    """
+    """!
     @brief Main method for parsing the expression using stack.py module
     @param expression Expression string from app.py module
     @return Result string of the expression or error message
@@ -175,7 +175,7 @@ class MathParsing:
         if self.check_semantics() is False:
             return "Couldn't parse expression"
 
-        """ Start parsing an expression """
+        """! Start parsing an expression """
         for token in self.tokens:
             if token not in self.operators and token != LEFT_PAR and token != RIGHT_PAR:
                 self.operand_stack.push(token)
@@ -216,7 +216,7 @@ class MathParsing:
 
         return str(self.operand_stack.top())
 
-    """
+    """!
     @brief Main method for parsing the expression using stack.py module
     @param func Function name (log or sqrt)
     @param exspression Expression to evaluate
@@ -308,7 +308,7 @@ class MathParsing:
 
         return str(result), index_end
 
-    """
+    """!
     @brief Method for evaluating factorial
     @param exspression Expression to evaluate
     @return Result of the evaluating
@@ -327,7 +327,7 @@ class MathParsing:
 
         return str(result)
 
-    """
+    """!
     @brief Method for evaluating trigonometric functions
     @param func Trigonometric function
     @param exspression Expression to evaluate
@@ -352,7 +352,7 @@ class MathParsing:
         return str(result)
 
 
-    """
+    """!
     @brief Method for evaluation of single math expressions using math libraries
     @param operand1 First operand
     @param operand2 Second operand

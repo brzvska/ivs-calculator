@@ -1,16 +1,16 @@
-"""
-@package arithmetic
+"""!
+@package calculator
 @file basic.py
 @author Alina Vinogradova
 Implementation of basic mathematical operations for the calculator
 """
 
-"""
+"""!
 Base class "Basic"
 Representation of basic mathematical operations
 """
 class Basic:
-    """
+    """!
     A class variables:
     pi - constant
     exp - constant
@@ -18,13 +18,13 @@ class Basic:
     pi = 3.1416
     exp = 2.7183
 
-    """
+    """!
     The constructor
     """
     def __init__(self):
         pass
 
-    """
+    """!
     Method for + operation
     @param x First operand
     @param y Second operand
@@ -33,7 +33,7 @@ class Basic:
     def add(self, x: float, y: float):
         return self.int_translate(x + y)
 
-    """
+    """!
     Method for - operation
     @param minuend First operand
     @param subtrahend Second operand
@@ -42,7 +42,7 @@ class Basic:
     def sub(self, minuend: float, subtrahend: float):
         return self.int_translate(minuend - subtrahend)
 
-    """
+    """!
     Method for * operation
     @param multiplier First operand
     @param multiplicand Second operand
@@ -51,7 +51,7 @@ class Basic:
     def mul(self, multiplier: float, multiplicant: float):
         return self.int_translate(multiplier * multiplicant)
 
-    """
+    """!
     Method for / operation
     @param dividend The number to be divided
     @param divisor The number to divide by
