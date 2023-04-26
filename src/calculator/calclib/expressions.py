@@ -12,8 +12,8 @@ RIGHT_PAR = ")"
 
 
 """
-Base class "BasicMathParsing"
-Representation of basic math logic
+Base class "MathParsing"
+@brief Representation of basic math logic
 """
 class MathParsing:
 
@@ -27,7 +27,7 @@ class MathParsing:
         self.operand_stack = stack.Stack()
 
     """
-    Method for splitting an expression into tokens
+    @brief Method for splitting an expression into tokens
     @param expression Expression string
     """
     def split_expression(self, expression: str):
@@ -41,14 +41,14 @@ class MathParsing:
                     number = ""
                 self.tokens.append(char)
             elif char == "e":
-                self.tokens.append("2.7183")
+                self.tokens.append(str(self.basic.exp))
             elif char == "π":
-                self.tokens.append("3.1416")
+                self.tokens.append(str(self.basic.pi))
         if number != "":
             self.tokens.append(number)
 
     """
-    Method for checking if the expression is correct
+    @brief Method for checking if the expression is correct
     @return True if expression is correct, False instead
     """
     def check_semantics(self):
@@ -152,7 +152,7 @@ class MathParsing:
         return True
 
     """
-    Main method for parsing the expression using stack.py module
+    @brief Main method for parsing the expression using stack.py module
     @param expression Expression string from app.py module
     @return Result string of the expression or error message
     """
@@ -217,7 +217,7 @@ class MathParsing:
         return str(self.operand_stack.top())
 
     """
-    Main method for parsing the expression using stack.py module
+    @brief Main method for parsing the expression using stack.py module
     @param func Function name (log or sqrt)
     @param exspression Expression to evaluate
     @return Result of the parsing. Result is "" if error occurred
@@ -309,7 +309,7 @@ class MathParsing:
         return str(result), index_end
 
     """
-    Method for evaluating factorial
+    @brief Method for evaluating factorial
     @param exspression Expression to evaluate
     @return Result of the evaluating
     """
@@ -328,7 +328,7 @@ class MathParsing:
         return str(result)
 
     """
-    Method for evaluating trigonometric functions
+    @brief Method for evaluating trigonometric functions
     @param func Trigonometric function
     @param exspression Expression to evaluate
     @return Result of the evaluating
@@ -353,7 +353,7 @@ class MathParsing:
 
 
     """
-    Method for evaluation of single math expressions using math libraries
+    @brief Method for evaluation of single math expressions using math libraries
     @param operand1 First operand
     @param operand2 Second operand
     @return False if error occurred
@@ -367,7 +367,10 @@ class MathParsing:
             case "×":
                 result = self.basic.mul(operand1, operand2)
             case "÷":
-                result = self.basic.div(operand1, operand2)
+                try:
+                    result = self.basic.div(operand1, operand2)
+                except ZeroDivisionError:
+                    return False
             case "^":
                 if operand2.is_integer():
                     result = self.adv.power(operand1, operand2)

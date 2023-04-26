@@ -161,7 +161,7 @@ class Window(QMainWindow):
         factorial_button = MathOperationButton("!", self)
         factorial_button.setGeometry(10, 354, 53, 53)
 
-        logarithm_button = MathOperationButton("log", self)
+        logarithm_button = MathOperationButton("ln", self)
         logarithm_button.setGeometry(10, 240, 53, 53)
 
         square_button = MathOperationButton("√", self)
@@ -361,7 +361,7 @@ class HelpWindow(QMainWindow):
         self.second_label.setFont(QFont('Cascadia Mono', 10))
         self.second_label.setStyleSheet("letter-spacing: 2px; color: #000; background-color: #fff; "
                                         "border-right: 1px solid #72727E")
-        self.second_label.setText("sin/cos/\ntan/cos\n\nln(n)\n\na^n\n\n!\n\ne\n\nπ\n\n√")
+        self.second_label.setText("sin/cos/\ntan/cos\n\nlog(n)\n\n^\n\n!\n\ne\n\nπ\n\n√")
 
         """! label on the right side"""
         self.third_label = QLabel(self)
@@ -370,8 +370,8 @@ class HelpWindow(QMainWindow):
         self.third_label.setFont(QFont('Cascadia Mono', 10))
         self.third_label.setStyleSheet("letter-spacing: 1px; color: #000; background-color: #fff")
         self.third_label.setText("\n\n    enter argument -> click on sin/cos/tan/ctg\n\n\n"
-                                 "    enter argument -> click on ln \n\n"
-                                 "    enter number -> click on a^n -> enter power\n\n"
+                                 "    enter base -> click on log(n) -> enter number\n\n"
+                                 "    enter number -> click on ^ -> enter power\n\n"
                                  "    enter number -> click on !\n\n"
                                  "    click on e\n\n"
                                  "    click on π\n\n"
