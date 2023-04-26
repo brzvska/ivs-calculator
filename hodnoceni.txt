@@ -1,0 +1,3 @@
+xmazur08 100 (GUI, advanced and basic math logic)
+xberez04 100 (GUI, tests, documentation)
+xvinog00 100 (Profiling, installer, makefile, libraries, tests)

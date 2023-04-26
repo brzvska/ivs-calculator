@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['adv_0',['adv',['../classcalclib_1_1expressions_1_1_math_parsing.html#a4f70541a92f4b875b0d8c91cad8bcd02',1,'calclib::expressions::MathParsing']]],
-  ['app_1',['App',['../namespaceapp.html#ac1a96d67f9eb0b666923af4b5bd29897',1,'app']]]
+  ['adv_160',['adv',['../classcalclib_1_1expressions_1_1MathParsing.html#a4f70541a92f4b875b0d8c91cad8bcd02',1,'calclib::expressions::MathParsing']]],
+  ['app_161',['App',['../namespaceapp.html#a0ac8512426efbd5aed951550c0939686',1,'app']]]
 ];

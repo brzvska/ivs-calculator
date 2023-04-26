@@ -25,8 +25,8 @@
 var menudata={children:[
 {text:"Main Page",url:"index.html"},
 {text:"Packages",url:"namespaces.html",children:[
-{text:"Package List",url:"namespaces.html"},
-{text:"Package Members",url:"namespacemembers.html",children:[
+{text:"Packages",url:"namespaces.html"},
+{text:"Package Functions",url:"namespacemembers.html",children:[
 {text:"All",url:"namespacemembers.html"},
 {text:"Variables",url:"namespacemembers_vars.html"}]}]},
 {text:"Classes",url:"annotated.html",children:[

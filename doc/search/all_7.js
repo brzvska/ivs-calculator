@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['helpwindow_0',['HelpWindow',['../classapp_1_1_help_window.html',1,'app']]]
+  ['helpwindow_48',['HelpWindow',['../classapp_1_1HelpWindow.html',1,'app']]]
 ];
