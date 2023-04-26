@@ -32,7 +32,6 @@ setup: requirements.txt
 
 build: setup
 		pyinstaller app.spec
-		$(MOVE) dist/Calculator.* ../
 
 profile: profiling.py
 		$(PY) -m profile -o ../profiling/output10_1 $< < ../profiling/10_1

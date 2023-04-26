@@ -2,7 +2,7 @@
 @package calculator
 @file advanced.py
 @author Alina Vinogradova
-Implementation of advanced mathematical operations for the calculator
+@brief Implementation of advanced mathematical operations for the calculator
 """
 import sys
 
