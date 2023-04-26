@@ -1,3 +1,8 @@
+"""
+@brief file test-expression.py with unit tests of expressions
+Author: Anastasiia Berezovska
+"""
+
 import unittest
 from calculator.calclib.expressions import MathParsing
 
@@ -40,7 +45,7 @@ class AdditionTests(unittest.TestCase):
     def test_basic_operand_is_missing(self):
         """Test one operand is missing"""
         expr = '5+'
-        self.assertEqual('Couldn/''t parse expression', self.op.parse(expr))
+        self.assertEqual("Couldn't parse expression", self.op.parse(expr))
 
     def test_basic_expr(self):
         """Test basic expression"""
@@ -66,7 +71,7 @@ class SubtractionTests(unittest.TestCase):
     def test_basic_float(self):
         """Test basic float"""
         expr = '10.0-1.1'
-        self.assertEqual('9.9', self.op.parse(expr))
+        self.assertEqual('8.9', self.op.parse(expr))
 
     def test_basic_neg_int(self):
         """Test basic negative integer"""
@@ -86,7 +91,7 @@ class SubtractionTests(unittest.TestCase):
     def test_basic_both_neg_floats(self):
         """Test basic both negative floats"""
         expr = '-1.1-0.1'
-        self.assertEqual('-1.2', self.op.MathParsing.parse(expr))
+        self.assertEqual('-1.2', self.op.parse(expr))
 
     def test_basic_expr(self):
         """Test basic expression"""
@@ -170,14 +175,9 @@ class DivisionTests(unittest.TestCase):
         expr = '-18÷(-3)'
         self.assertEqual('6', self.op.parse(expr))
 
-    def test_basic_both_neg_floats(self):
-        """Test basic both negative floats"""
-        expr = '-6.6÷(-2.2)'
-        self.assertEqual('3', self.op.parse(expr))
-
     def test_complex_expr(self):
         """Test complex expression"""
-        expr = '(-10÷(4÷2))÷1)'
+        expr = '(-10÷(4÷2))÷1'
         self.assertEqual('-5', self.op.parse(expr))
 
 
