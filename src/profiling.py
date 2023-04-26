@@ -1,4 +1,4 @@
-from calclib import Advanced
+from calculator.calclib.advanced import Advanced
 
 math = Advanced()
 

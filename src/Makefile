@@ -34,14 +34,17 @@ build: setup
 		pyinstaller app.spec
 
 profile: profiling.py
-		$(PY) -m profile -o ../profiling/output10_1 $< < ../profiling/10_1
-
+		printf "## Statistics for input size of 10\n\n" >> ../profiling/vystup.txt
+		$(PY) -m profile $< < ../profiling/10_1 >> ../profiling/vystup.txt
+		printf "\n## Statistics for input size of 1000\n\n" >> ../profiling/vystup.txt
+		$(PY) -m profile $< < ../profiling/10_3 >> ../profiling/vystup.txt
+		printf "\n## Statistics for input size of 1000000\n\n" >> ../profiling/vystup.txt
+		$(PY) -m profile $< < ../profiling/10_6 >> ../profiling/vystup.txt
 clean:
-		# $(CLEANUP) $(BUILDDIRS)
+		 $(CLEANUP) $(BUILDDIRS)
 		rm -rf __pycache__/
 		rm -rf calculator/__pycache__/
 		rm -rf calculator/calclib/__pycache__/
-		rm calculator/.DS_Store
 
 pack:
 		mkdir -p ../../$(ZIP)/doc
