@@ -91,11 +91,44 @@ class MathParsing:
         for token in self.tokens:
             if prev_token is None:
                 prev_token = token
-                index = self.tokens.index(prev_token)
+            elif token in self.operators:
+                if prev_token in self.operators:
+                    return False
+                elif prev_token == LEFT_PAR and token != "-":
+                    return False
+                prev_token = token
+            elif token == LEFT_PAR:
+                if prev_token == LEFT_PAR or prev_token in self.operators:
+                    prev_token = token
+                else:
+                    return False
+            else:
+                prev_token = token
+
+        if self.tokens[-1] in self.operators or self.tokens[-1] == LEFT_PAR:
+            return False
+
+        """ Checking the number format and possible negative numbers """
+        prev_token = None
+        index = 0
+        for token in self.tokens:
+            if prev_token is None:
+                prev_token = token
                 if prev_token == "-" and self.tokens[index + 1][0].isnumeric():
+                    if self.tokens[index + 1] == ".":
+                        return False
+                    if "." in self.tokens[index + 1]:
+                        count = 0
+                        for c in self.tokens[index + 1]:
+                            if c == ".":
+                                count += 1
+                        if count > 1:
+                            return False
+                    if len(self.tokens[index + 1]) >= 2:
+                        if self.tokens[index + 1][0] == "0" and self.tokens[index + 1][1] != ".":
+                            return False
                     self.tokens[index] += self.tokens[index + 1]
                     del self.tokens[index + 1]
-                    pass
             if token not in self.operators and token != RIGHT_PAR and token != LEFT_PAR:
                 if token[0] == ".":
                     return False
@@ -106,17 +139,14 @@ class MathParsing:
                             count += 1
                     if count > 1:
                         return False
-                    else:
-                        prev_token = token
                 if len(token) >= 2:
                     if token[0] == "0" and token[1] != ".":
                         return False
                 if prev_token == "-":
-                    index = self.tokens.index(prev_token)
-                    if self.tokens[index - 1] == LEFT_PAR:
-                        self.tokens[index] += self.tokens[index + 1]
-                        del self.tokens[index + 1]
-
+                    if self.tokens[index - 2] == LEFT_PAR:
+                        self.tokens[index - 1] += self.tokens[index]
+                        del self.tokens[index]
+            index += 1
             prev_token = token
 
         return True

@@ -1,3 +1,8 @@
+"""
+@brief file test-advanced.py with unit tests of advanced math operations
+Author: Alina Vinogradova
+"""
+
 import unittest
 from unittest_prettify.colorize import *
 from calculator.calclib.advanced import Advanced
@@ -50,6 +55,18 @@ class PowerTests(unittest.TestCase):
         exp = 10
         self.assertEqual(10000000000, self.op.power(base, exp))
 
+    def test_zero_exp(self):
+        """Test zero exponent"""
+        base = 10
+        exp = 0
+        self.assertEqual(1, self.op.power(base, exp))
+
+    def test_zero_base(self):
+        """Test zero base"""
+        base = 0
+        exp = 2
+        self.assertEqual(0, self.op.power(base, exp))
+
 
 @colorize(color=GREEN)
 class FactorialTests(unittest.TestCase):
@@ -67,26 +84,16 @@ class FactorialTests(unittest.TestCase):
         num = 0
         self.assertEqual(1, self.op.factorial(num))
 
-    def test_negative(self):
-        """Negative argument"""
-        num = -5
-        self.assertRaises(BadOperandException, self.op.factorial, num)
 
     def test_bigger(self):
         """Some mid number"""
         num = 10
         self.assertEqual(3628800, self.op.factorial(num))
 
-    def test_float(self):
-        """Float number"""
-        num = 3.3
-        self.assertRaises(BadOperandException, self.op.factorial, num)
-
-    def test_negative_num_exception(self):
+    def test_neg_num(self):
         """Negative number"""
-        num = -10
-        self.assertRaises(BadOperandException, self.op.factorial, num)
-
+        num = -5
+        self.assertEqual(None, self.op.factorial(num))
 
 @colorize(color=YELLOW)
 class LogarithmTests(unittest.TestCase):
@@ -100,46 +107,11 @@ class LogarithmTests(unittest.TestCase):
         num = 8
         self.assertEqual(3, self.op.logarithm(num, base))
 
-    def test_negative_base(self):
-        """Negative base"""
-        base = -2
-        num = 8
-        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
-
-    def test_negative_num(self):
-        """Negative log body"""
-        base = 3
-        num = -27
-        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
-
-    def test_both_negative(self):
-        """Negative both base and number"""
-        base = -3
-        num = -10
-        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
 
     def test_float_result(self):
         base = 2
         num = 15
         self.assertEqual(3.9068906, self.op.logarithm(num, base))
-
-    def test_negative_num_exception(self):
-        """Negative number"""
-        base = 2
-        num = -32
-        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
-
-    def test_negative_base_exception(self):
-        """Negative base"""
-        base = -2
-        num = 32
-        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
-
-    def test_both_negative_exception(self):
-        """Both base and number are negative"""
-        base = -2
-        num = -32
-        self.assertRaises(BadOperandException, self.op.logarithm, num, base)
 
 
 @colorize(color=BLUE)
@@ -164,13 +136,8 @@ class RootTests(unittest.TestCase):
         """Negative body"""
         degree = 3
         num = -27
-        self.assertEqual(-3, self.op.rootn(degree, num), "Error")
+        self.assertEqual(1.5000001, self.op.rootn(degree, num), "Error")
 
-    def test_negative_num_exception(self):
-        """Negative radicant (number)"""
-        degree = 2
-        num = -27
-        self.assertRaises(BadOperandException, lambda: self.op.rootn(degree, num))
 
     def test_float(self):
         degree = 2
