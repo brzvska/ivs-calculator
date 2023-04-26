@@ -5,4 +5,4 @@ __pycache__/
 src/build
 src/dist
 venv/
-.DS_Store/
+.DS_Store
