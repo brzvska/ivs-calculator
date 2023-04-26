@@ -213,7 +213,7 @@ class DivTests(unittest.TestCase):
         """Two zeros"""
         x = 0
         y = 0
-        self.failureException(self.op.div(x, y))
+        self.assertRaises(ZeroDivisionError, self.op.div, x, y)
 
     def test_negative_both(self):
         """Two negative numbers"""
@@ -231,7 +231,7 @@ class DivTests(unittest.TestCase):
         """Zero Division"""
         x = -33
         y = 0
-        self.failureException(self.op.div(x, y))
+        self.assertRaises(ZeroDivisionError, self.op.div, x, y)
 
     def test_extreme(self):
         """Two very large numbers"""
